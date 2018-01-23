@@ -2,9 +2,9 @@ package francois.tomasi.outerspacemanager;
 
 public class CreateUserResponse {
     private String token;
-    private int expires;
+    private long expires;
 
-    public CreateUserResponse(String token, int expires) {
+    public CreateUserResponse(String token, long expires) {
         this.token = token;
         this.expires = expires;
     }
@@ -17,11 +17,11 @@ public class CreateUserResponse {
         this.token = token;
     }
 
-    public int getExpires() {
+    public long getExpires() {
         return expires;
     }
 
-    public void setExpires(int expires) {
+    public void setExpires(long expires) {
         this.expires = expires;
     }
 

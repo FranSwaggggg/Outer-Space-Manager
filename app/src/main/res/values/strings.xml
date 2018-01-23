@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Outer Space Manager</string>
+    <string name="general_view">Vue générale</string>
+    <string name="buildings">Bâtiments</string>
+    <string name="fleet">Flotte</string>
+    <string name="research">Recherches</string>
+    <string name="space_shipyard">Chantier Spatial</string>
+    <string name="galaxy">Galaxie</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="already_account">Déjà un compte ?</string>
+    <string name="connection">Connexion</string>
+    <string name="sign_in">Se Connecter</string>
+    <string name="minerals">Minéraux</string>
+    <string name="gas">Gaz</string>
 </resources>
