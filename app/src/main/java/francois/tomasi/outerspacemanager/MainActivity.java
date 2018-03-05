@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +21,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.lang.StrictMath.round;
+import static java.lang.String.format;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -28,7 +33,17 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView txtUsername = findViewById(R.id.txtUsername);
         final TextView txtPoints = findViewById(R.id.txtPoints);
-        final ProgressBar loaderDataUser = findViewById(R.id.loaderDataUser);
+        final TextView txtGasValue = findViewById(R.id.txtGasValue);
+        final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
+        final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
+
+        final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
+
+        final Button btnBuildings = findViewById(R.id.btnBuildings);
+        final Button btnFleet = findViewById(R.id.btnFleet);
+        final Button btnResearch = findViewById(R.id.btnResearch);
+        final Button btnShipyard = findViewById(R.id.btnShipyard);
+        final Button btnGalaxy = findViewById(R.id.btnGalaxy);
 
         Intent intent = getIntent();
         final User oldUser = (User) intent.getSerializableExtra(Constants.USER_CONNECTED);
@@ -37,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         String token = settings.getString(Constants.TOKEN, "");
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
+                .baseUrl(Constants.URL_API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ApiService service = retrofit.create(ApiService.class);
@@ -50,11 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 User user = new User(oldUser, data.getGas(), data.getGasModifier(), data.getMinerals(), data.getMineralsModifier(), data.getPoints());
 
                 txtUsername.setText(user.getUsername());
-                txtPoints.setText("Points : " + user.getPoints());
+                txtPoints.setText(user.getPoints() + " pts");
+                txtGasValue.setText(format("%,d", round(user.getGas())));
+                txtMineralsValue.setText(format("%,d", round(user.getMinerals())));
 
-                loaderDataUser.setVisibility(View.GONE);
-                txtUsername.setVisibility(View.VISIBLE);
-                txtPoints.setVisibility(View.VISIBLE);
+                loaderUserInfos.setVisibility(View.GONE);
+                layoutUserInfos.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -62,12 +78,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        btnBuildings.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, BuildingActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        btnFleet.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, FleetActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
     }
 
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Êtes-vous sur de vouloir vous déconnecter ?").setPositiveButton("Oui", dialogClickListener)
+        builder.setMessage("Êtes-vous sur de vouloir vous déconnecter ?")
+                .setPositiveButton("Oui", dialogClickListener)
                 .setNegativeButton("Non", dialogClickListener).show();
     }
 
@@ -81,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
                     editor.remove(Constants.TOKEN);
                     editor.apply();
 
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                     break;
 
                 case DialogInterface.BUTTON_NEGATIVE:
-                    //No button clicked
+                    // Button No clicked
                     break;
             }
         }

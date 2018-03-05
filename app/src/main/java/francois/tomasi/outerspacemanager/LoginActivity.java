@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                         User user = new User(username, email, password);
 
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
+                                .baseUrl(Constants.URL_API)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         ApiService service = retrofit.create(ApiService.class);
