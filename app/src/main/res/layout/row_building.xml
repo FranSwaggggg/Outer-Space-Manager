@@ -27,7 +27,8 @@
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:text="Building Name"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewLevel"
@@ -54,7 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Mineral" />
+                    android:text="Mineral"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewMineralCost"
@@ -76,7 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Gas" />
+                    android:text="Gas"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textViewGasCost"

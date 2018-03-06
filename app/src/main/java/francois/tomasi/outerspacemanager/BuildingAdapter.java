@@ -21,6 +21,13 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
     private final Context context;
     private final List<Building> buildings;
 
+    private OnClickButtonListItem mOnClickButtonListItem;
+
+    public void setOnEventListener(OnClickButtonListItem listener)
+    {
+        mOnClickButtonListItem = listener;
+    }
+
     public BuildingAdapter(Context context, List<Building> buildings) {
         super(context, R.layout.row_building, buildings);
         this.context = context;
@@ -47,7 +54,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             convertView.setTag(viewHolder);
         }
 
-        Building building = getItem(position);
+        final Building building = getItem(position);
 
         Glide.with(getContext()).load(building.getImageUrl()).into(viewHolder.image);
         viewHolder.name.setText(building.getName());
@@ -55,6 +62,13 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.gasCost.setText(format("%,d", building.getGasCostLevel0() + building.getGasCostByLevel() * building.getLevel()));
         viewHolder.mineralCost.setText(format("%,d", building.getMineralCostLevel0() + building.getMineralCostByLevel() * building.getLevel()));
         viewHolder.buttonUpgrade.setText("Améliorer au niveau " + building.getLevel() + 1);
+
+        viewHolder.buttonUpgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnClickButtonListItem.OnClick(building.getBuildingId());
+            }
+        });
 
         return convertView;
     }

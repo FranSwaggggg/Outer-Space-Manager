@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,7 +36,17 @@ public class BuildingActivity extends AppCompatActivity {
         request.enqueue(new Callback<GetBuildingsResponse>() {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
+
                 BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, response.body().getBuildings());
+
+                adapter.setOnEventListener(new OnClickButtonListItem() {
+                    @Override
+                    public void OnClick(int id) {
+                        Toast toast = Toast.makeText(BuildingActivity.this, "Click " + id, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+
                 listViewBuildings.setAdapter(adapter);
             }
 
