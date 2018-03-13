@@ -3,7 +3,10 @@ package francois.tomasi.outerspacemanager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,20 +27,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static java.lang.StrictMath.round;
 import static java.lang.String.format;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+    private int gasModifierValue = 0;
+    private int mineralsModifierValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView txtUsername = findViewById(R.id.txtUsername);
-        final TextView txtPoints = findViewById(R.id.txtPoints);
-        final TextView txtGasValue = findViewById(R.id.txtGasValue);
-        final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
-        final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
-
-        final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
+        setData();
 
         final Button btnBuildings = findViewById(R.id.btnBuildings);
         final Button btnFleet = findViewById(R.id.btnFleet);
@@ -45,39 +44,8 @@ public class MainActivity extends AppCompatActivity {
         final Button btnShipyard = findViewById(R.id.btnShipyard);
         final Button btnGalaxy = findViewById(R.id.btnGalaxy);
 
-        Intent intent = getIntent();
-        final User oldUser = (User) intent.getSerializableExtra(Constants.USER_CONNECTED);
-
-        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-        String token = settings.getString(Constants.TOKEN, "");
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.URL_API)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ApiService service = retrofit.create(ApiService.class);
-        Call<GetUserResponse> request = service.getUser(token);
-
-        request.enqueue(new Callback<GetUserResponse>() {
-            @Override
-            public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
-                GetUserResponse data = response.body();
-                User user = new User(oldUser, data.getGas(), data.getGasModifier(), data.getMinerals(), data.getMineralsModifier(), data.getPoints());
-
-                txtUsername.setText(user.getUsername());
-                txtPoints.setText(user.getPoints() + " pts");
-                txtGasValue.setText(format("%,d", round(user.getGas())));
-                txtMineralsValue.setText(format("%,d", round(user.getMinerals())));
-
-                loaderUserInfos.setVisibility(View.GONE);
-                layoutUserInfos.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<GetUserResponse> call, Throwable t) {
-
-            }
-        });
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         btnBuildings.setOnClickListener(
                 new View.OnClickListener() {
@@ -129,4 +97,62 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onRefresh() {
+        setData();
+    }
+
+    protected void setData() {
+        final TextView txtUsername = findViewById(R.id.txtUsername);
+        final TextView txtPoints = findViewById(R.id.txtPoints);
+        final TextView txtGasValue = findViewById(R.id.txtGasValue);
+        final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
+        final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
+
+        final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
+
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary, getTheme()));
+
+        Intent intent = getIntent();
+        final User oldUser = (User) intent.getSerializableExtra(Constants.USER_CONNECTED);
+
+        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
+        String token = settings.getString(Constants.TOKEN, "");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.URL_API)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiService service = retrofit.create(ApiService.class);
+        Call<GetUserResponse> request = service.getUser(token);
+
+        request.enqueue(new Callback<GetUserResponse>() {
+            @Override
+            public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
+                final GetUserResponse data = response.body();
+
+                User user = new User(oldUser, data.getGas(), data.getGasModifier(), data.getMinerals(), data.getMineralsModifier(), data.getPoints());
+
+                gasModifierValue = data.getGasModifier();
+                mineralsModifierValue = data.getMineralsModifier();
+
+                txtUsername.setText(user.getUsername());
+                txtPoints.setText(format("%,d", user.getPoints()) + " pts");
+                txtGasValue.setText(Integer.toString(round(user.getGas())));
+                txtMineralsValue.setText(Integer.toString(round(user.getMinerals())));
+
+                loaderUserInfos.setVisibility(View.GONE);
+                layoutUserInfos.setVisibility(View.VISIBLE);
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<GetUserResponse> call, Throwable t) {
+
+            }
+        });
+    }
 }

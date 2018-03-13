@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,6 +51,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             viewHolder.image = convertView.findViewById(R.id.imageViewBuilding);
             viewHolder.name = convertView.findViewById(R.id.textViewBuildingName);
             viewHolder.level = convertView.findViewById(R.id.textViewLevel);
+            viewHolder.progressBarUpgradeBuilding = convertView.findViewById(R.id.progressBarUpgradeBuilding);
+            viewHolder.layoutBuildingData = convertView.findViewById(R.id.layoutBuildingData);
             viewHolder.gasCost = convertView.findViewById(R.id.textViewGasCost);
             viewHolder.mineralCost = convertView.findViewById(R.id.textViewMineralCost);
             viewHolder.buttonUpgrade = convertView.findViewById(R.id.btnUpgradeBuilding);
@@ -61,7 +66,7 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         viewHolder.level.setText("Niveau " + building.getLevel());
         viewHolder.gasCost.setText(format("%,d", building.getGasCostLevel0() + building.getGasCostByLevel() * building.getLevel()));
         viewHolder.mineralCost.setText(format("%,d", building.getMineralCostLevel0() + building.getMineralCostByLevel() * building.getLevel()));
-        viewHolder.buttonUpgrade.setText("Améliorer au niveau " + building.getLevel() + 1);
+        viewHolder.buttonUpgrade.setText("Améliorer au niveau " + (building.getLevel() + 1));
 
         viewHolder.buttonUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +75,16 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
             }
         });
 
+        if (building.isBuilding()) {
+            viewHolder.layoutBuildingData.setVisibility(View.INVISIBLE);
+            viewHolder.progressBarUpgradeBuilding.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.layoutBuildingData.setVisibility(View.VISIBLE);
+            viewHolder.progressBarUpgradeBuilding.setVisibility(View.INVISIBLE);
+        }
+
+        viewHolder.buttonUpgrade.setEnabled(!building.isBuilding());
+
         return convertView;
     }
 
@@ -77,6 +92,8 @@ public class BuildingAdapter extends ArrayAdapter<Building> {
         public ImageView image;
         public TextView name;
         public TextView level;
+        public ProgressBar progressBarUpgradeBuilding;
+        public LinearLayout layoutBuildingData;
         public TextView gasCost;
         public TextView mineralCost;
         public Button buttonUpgrade;

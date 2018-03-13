@@ -3,10 +3,11 @@ package francois.tomasi.outerspacemanager;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,13 +38,41 @@ public class BuildingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
 
-                BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, response.body().getBuildings());
+                final BuildingAdapter adapter = new BuildingAdapter(BuildingActivity.this, response.body().getBuildings());
 
                 adapter.setOnEventListener(new OnClickButtonListItem() {
                     @Override
                     public void OnClick(int id) {
-                        Toast toast = Toast.makeText(BuildingActivity.this, "Click " + id, Toast.LENGTH_SHORT);
-                        toast.show();
+                        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
+                        String token = settings.getString(Constants.TOKEN, "");
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(Constants.URL_API)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        ApiService service = retrofit.create(ApiService.class);
+                        Call<UpgradeBuildingResponse> request = service.upgradeBuilding(token, id);
+
+                        request.enqueue(new Callback<UpgradeBuildingResponse>() {
+                            @Override
+                            public void onResponse(Call<UpgradeBuildingResponse> call, Response<UpgradeBuildingResponse> response) {
+                                UpgradeBuildingResponse data = response.body();
+                                if (Objects.equals(data.getCode(), "200")) {
+                                    Toast toast = Toast.makeText(getApplicationContext(), data.getCode() + data.getMessage(), Toast.LENGTH_LONG);
+                                    toast.show();
+
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    Toast toast = Toast.makeText(getApplicationContext(), data.getCode() + data.getMessage(), Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<UpgradeBuildingResponse> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
 
