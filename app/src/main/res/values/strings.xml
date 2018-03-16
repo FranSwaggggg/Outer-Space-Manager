@@ -12,4 +12,7 @@
     <string name="sign_in">Se Connecter</string>
     <string name="minerals">Minéraux</string>
     <string name="gas">Gaz</string>
+    <string name="username">Pseudo</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
 </resources>
