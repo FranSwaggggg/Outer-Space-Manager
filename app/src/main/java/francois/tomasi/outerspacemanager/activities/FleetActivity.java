@@ -1,7 +1,9 @@
 package francois.tomasi.outerspacemanager.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import francois.tomasi.outerspacemanager.R;
 
 public class FleetActivity extends AppCompatActivity {
 

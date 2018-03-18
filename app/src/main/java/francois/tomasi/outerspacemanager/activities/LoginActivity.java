@@ -1,52 +1,117 @@
 package francois.tomasi.outerspacemanager.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
-import francois.tomasi.outerspacemanager.responses.ConnectUserResponse;
-import francois.tomasi.outerspacemanager.helpers.Constants;
-import francois.tomasi.outerspacemanager.responses.CreateUserResponse;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.Objects;
+
 import francois.tomasi.outerspacemanager.R;
+import francois.tomasi.outerspacemanager.helpers.Constants;
+import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
+import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
 import francois.tomasi.outerspacemanager.models.User;
+import francois.tomasi.outerspacemanager.responses.ConnectUserResponse;
+import francois.tomasi.outerspacemanager.responses.CreateUserResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
+import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText editTxtUsername;
-    private EditText editTxtEmail;
-    private EditText editTxtPassword;
-
-    private TextView alreadyAccount;
+    private ApiService service = ApiServiceFactory.create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
-        final Button btnSignIn = findViewById(R.id.btnSignIn);
-        final Button btnConnexion = findViewById(R.id.btnConnexion);
+        final TextInputLayout wrapperEmail = findViewById(R.id.wrapperEmail);
 
-        editTxtUsername = findViewById(R.id.editTxtUsername);
-        editTxtEmail = findViewById(R.id.editTxtEmail);
-        editTxtPassword = findViewById(R.id.editTxtPassword);
+        final EditText editTxtUsername = findViewById(R.id.editTxtUsername);
+        final EditText editTxtEmail = findViewById(R.id.editTxtEmail);
+        final EditText editTxtPassword = findViewById(R.id.editTxtPassword);
 
-        alreadyAccount = findViewById(R.id.alreadyAccount);
+        final LinearLayout linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
+        final LinearLayout linearLayoutSignUp = findViewById(R.id.linearLayoutSignUp);
+        final LinearLayout layoutLoadingLogin = findViewById(R.id.layoutLoadingLogin);
 
+        Button btnConnect = findViewById(R.id.btnConnect);
+        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        Button btnSignUp = findViewById(R.id.btnSignUp);
+        Button btnSignIn = findViewById(R.id.btnSignIn);
+
+
+        // DEV CONFIG
         editTxtUsername.setText("FranSwaggggg");
+        editTxtEmail.setText("francoistomasi@hotmail.fr");
         editTxtPassword.setText("licencedim");
+
+        btnConnect.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String username = editTxtUsername.getText().toString();
+                    String password = editTxtPassword.getText().toString();
+
+                    final User user = new User(username, password);
+
+                    layoutLoadingLogin.setVisibility(View.VISIBLE);
+                    linearLayoutSignIn.setVisibility(View.GONE);
+
+                    Call<ConnectUserResponse> request = service.connectUser(user);
+
+                    request.enqueue(new Callback<ConnectUserResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ConnectUserResponse> call, @NonNull Response<ConnectUserResponse> response) {
+                            if (Objects.equals(response.code(), 200)) {
+                                SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                intent.putExtra(Constants.USER_CONNECTED, user);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Le mot de passe ou le pseudo sont erronés", Snackbar.LENGTH_LONG);
+                                layoutLoadingLogin.setVisibility(View.GONE);
+                                linearLayoutSignIn.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<ConnectUserResponse> call, @NonNull Throwable t) {
+                            SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau", Snackbar.LENGTH_LONG);
+                            layoutLoadingLogin.setVisibility(View.GONE);
+                            linearLayoutSignIn.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        );
+
+        btnSignUp.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    wrapperEmail.setVisibility(View.VISIBLE);
+                    linearLayoutSignIn.setVisibility(View.GONE);
+                    linearLayoutSignUp.setVisibility(View.VISIBLE);
+                }
+            }
+        );
 
         btnCreateAccount.setOnClickListener(
             new View.OnClickListener() {
@@ -59,30 +124,41 @@ public class LoginActivity extends AppCompatActivity {
                     if (!(username.matches("") || email.matches("") || password.matches(""))) {
                         User user = new User(username, email, password);
 
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(Constants.URL_API)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-                        ApiService service = retrofit.create(ApiService.class);
+                        layoutLoadingLogin.setVisibility(View.VISIBLE);
+                        linearLayoutSignUp.setVisibility(View.GONE);
+
                         Call<CreateUserResponse> request = service.createUser(user);
 
                         request.enqueue(new Callback<CreateUserResponse>() {
                             @Override
-                            public void onResponse(Call<CreateUserResponse> call, Response<CreateUserResponse> response) {
-                                Log.i("token", response.body().getToken());
-                                SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-                                SharedPreferences.Editor editor = settings.edit();
-                                editor.putString("token", response.body().getToken());
-                                editor.apply();
+                            public void onResponse(@NonNull Call<CreateUserResponse> call, @NonNull Response<CreateUserResponse> response) {
+                                if (Objects.equals(response.code(), 200)) {
+                                    SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
+                                    SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Votre compte à bien été créé", Snackbar.LENGTH_LONG);
+                                    findViewById(R.id.btnSignIn).callOnClick();
+                                } else {
+                                    try {
+                                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), jObjError.getString("message"), Snackbar.LENGTH_LONG);
+                                        layoutLoadingLogin.setVisibility(View.GONE);
+                                        linearLayoutSignUp.setVisibility(View.VISIBLE);
+                                    } catch (IOException | JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
 
                             @Override
-                            public void onFailure(Call<CreateUserResponse> call, Throwable t) {
-
+                            public void onFailure(@NonNull Call<CreateUserResponse> call, @NonNull Throwable t) {
+                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau", Snackbar.LENGTH_LONG);
+                                layoutLoadingLogin.setVisibility(View.GONE);
+                                linearLayoutSignUp.setVisibility(View.VISIBLE);
                             }
                         });
                     } else {
-                        Log.i("error", "Champs incomplet");
+                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Champs incomplets", Snackbar.LENGTH_LONG);
+                        layoutLoadingLogin.setVisibility(View.GONE);
+                        linearLayoutSignUp.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -92,70 +168,16 @@ public class LoginActivity extends AppCompatActivity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editTxtEmail.setVisibility(View.GONE);
-                    alreadyAccount.setVisibility(View.GONE);
-                    btnSignIn.setVisibility(View.GONE);
-                    btnConnexion.setVisibility(View.VISIBLE);
+                    wrapperEmail.setVisibility(View.GONE);
+                    linearLayoutSignIn.setVisibility(View.VISIBLE);
+                    linearLayoutSignUp.setVisibility(View.GONE);
                 }
             }
-        );
-
-        btnConnexion.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String username = editTxtUsername.getText().toString();
-                        String password = editTxtPassword.getText().toString();
-
-                        final User user = new User(username, password);
-
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("https://outer-space-manager.herokuapp.com/api/v1/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-                        ApiService service = retrofit.create(ApiService.class);
-                        Call<ConnectUserResponse> request = service.connectUser(user);
-
-                        request.enqueue(new Callback<ConnectUserResponse>() {
-                            @Override
-                            public void onResponse(Call<ConnectUserResponse> call, Response<ConnectUserResponse> response) {
-                                if (response.code() > 199 && response.code() < 301) {
-                                    Log.i("token", response.body().getToken());
-                                    SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-                                    SharedPreferences.Editor editor = settings.edit();
-                                    editor.putString(Constants.TOKEN, response.body().getToken());
-                                    editor.apply();
-
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent.putExtra(Constants.USER_CONNECTED, user);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (response.code() > 499 && response.code() < 601) {
-                                    Log.i("error", "Erreur serveur");
-                                } else {
-                                    Log.i("error", "Erreur");
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ConnectUserResponse> call, Throwable t) {
-                                Log.i("error", "Failure");
-                            }
-                        });
-                    }
-                }
         );
     }
 
     @Override
     public void onBackPressed() {
-        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
-        Button btnSignIn = findViewById(R.id.btnSignIn);
-        Button btnConnexion = findViewById(R.id.btnConnexion);
-
-        editTxtEmail.setVisibility(View.VISIBLE);
-        alreadyAccount.setVisibility(View.VISIBLE);
-        btnSignIn.setVisibility(View.VISIBLE);
-        btnConnexion.setVisibility(View.GONE);
+        findViewById(R.id.btnSignIn).callOnClick();
     }
 }

@@ -1,21 +1,22 @@
 package francois.tomasi.outerspacemanager.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import francois.tomasi.outerspacemanager.models.Building;
-import francois.tomasi.outerspacemanager.BuildingActivity;
-import francois.tomasi.outerspacemanager.adapters.BuildingAdapter;
-import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
 import francois.tomasi.outerspacemanager.R;
+import francois.tomasi.outerspacemanager.activities.BuildingActivity;
+import francois.tomasi.outerspacemanager.adapters.BuildingAdapter;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
+import francois.tomasi.outerspacemanager.models.Building;
+import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
 import retrofit2.Call;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 
 public class BuildingListFragment extends Fragment {
     private ListView listViewBuildings;
-    public ArrayList<Building> buildingList;
+    public List<Building> buildingList;
 
     private ApiService service = ApiServiceFactory.create();
 
@@ -35,7 +36,7 @@ public class BuildingListFragment extends Fragment {
         return v;
     }
 
-    private void getBuildings(){
+    private void getBuildings() {
 
         Call<GetBuildingsResponse> request = this.service.getBuildings(SharedPreferencesHelper.getToken(getContext()));
 
@@ -43,9 +44,10 @@ public class BuildingListFragment extends Fragment {
             @Override
             public void onResponse(Call<GetBuildingsResponse> call, Response<GetBuildingsResponse> response) {
                 if (response.code() == 200) {
-                    GetBuildingsResponse data = response.body();
+                    buildingList = response.body().getBuildings();
+                    Log.i("Building List", buildingList.get(0).toString());
 
-                    final BuildingAdapter adapter = new BuildingAdapter(getContext(), data.getBuildings());
+                    final BuildingAdapter adapter = new BuildingAdapter(getContext(), buildingList);
 
                     listViewBuildings.setOnItemClickListener((BuildingActivity)getActivity());
                     listViewBuildings.setAdapter(adapter);

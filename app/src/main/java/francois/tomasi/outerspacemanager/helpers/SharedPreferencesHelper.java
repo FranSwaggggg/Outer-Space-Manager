@@ -1,6 +1,5 @@
 package francois.tomasi.outerspacemanager.helpers;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 

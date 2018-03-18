@@ -2,20 +2,19 @@ package francois.tomasi.outerspacemanager.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.google.gson.Gson;
-
 import francois.tomasi.outerspacemanager.R;
 import francois.tomasi.outerspacemanager.fragments.BuildingDetailFragment;
 import francois.tomasi.outerspacemanager.fragments.BuildingListFragment;
-import francois.tomasi.outerspacemanager.models.Building;
 
 public class BuildingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    public static String SEARCH_EXTRA = "ship";
+    public static String BUILDING_EXTRA = "building";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,19 +24,25 @@ public class BuildingActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        BuildingListFragment buildingListFragment = (BuildingListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentBuildingList);
-        BuildingDetailFragment buildingDetailFragment = (BuildingDetailFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentBuildingDetail);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Building building = buildingListFragment.buildingList.get(position);
+        BuildingListFragment buildingListFragment = new BuildingListFragment();
+        BuildingDetailFragment buildingDetailFragment = new BuildingDetailFragment();
 
-        if (buildingDetailFragment == null || !buildingDetailFragment.isInLayout()) {
+        fragmentTransaction.add(R.id.fragmentBuildingList, buildingListFragment);
+        fragmentTransaction.add(R.id.fragmentBuildingDetail, buildingDetailFragment);
+
+        //Building building = buildingListFragment.buildingList.get(position);
+
+        if (!buildingDetailFragment.isInLayout()) {
             Intent i = new Intent(getApplicationContext(), BuildingDetailActivity.class);
 
-            Gson gson = new Gson();
-            i.putExtra(BuildingActivity.SEARCH_EXTRA, gson.toJson(building));
+            //Gson gson = new Gson();
+            //i.putExtra(BUILDING_EXTRA, gson.toJson(building));
             startActivity(i);
         } else {
-            buildingDetailFragment.updateBuilding(building);
+            //buildingDetailFragment.updateBuilding(building);
         }
     }
 

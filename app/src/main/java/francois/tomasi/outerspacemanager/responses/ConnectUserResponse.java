@@ -4,24 +4,33 @@ public class ConnectUserResponse {
     private String token;
     private long expires;
 
-    public ConnectUserResponse(String token, long expires) {
+    private String code;
+    private String internalCode;
+    private String status;
+    private String message;
+
+    public ConnectUserResponse(String token, long expires, String code, String internalCode, String status, String message) {
         this.token = token;
         this.expires = expires;
+        this.code = code;
+        this.internalCode = internalCode;
+        this.status = status;
+        this.message = message;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public long getExpires() {
         return expires;
     }
 
-    public void setExpires(long expires) {
-        this.expires = expires;
-    }
+    public String getCode() { return code; }
+
+    public String getInternalCode() { return internalCode; }
+
+    public String getStatus() { return status; }
+
+    public String getMessage() { return message; }
 }

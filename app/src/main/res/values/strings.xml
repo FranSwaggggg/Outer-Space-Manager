@@ -7,7 +7,7 @@
     <string name="space_shipyard">Chantier Spatial</string>
     <string name="galaxy">Galaxie</string>
     <string name="create_account">Créer un compte</string>
-    <string name="already_account">Déjà un compte ?</string>
+    <string name="no_account">Pas encore de compte ?</string>
     <string name="connection">Connexion</string>
     <string name="sign_in">Se Connecter</string>
     <string name="minerals">Minéraux</string>
@@ -15,4 +15,7 @@
     <string name="username">Pseudo</string>
     <string name="email">Email</string>
     <string name="password">Mot de passe</string>
+    <string name="new_account">Nouveau compte</string>
+    <string name="already_account">Déjà un compte ?</string>
+    <string name="connecting">Connexion en cours...</string>
 </resources>
