@@ -2,7 +2,8 @@ package francois.tomasi.outerspacemanager.helpers;
 
 public class Constants {
 
-    public static final String URL_API = "https://outer-space-manager.herokuapp.com/api/v1/";
+    //public static final String URL_API = "https://outer-space-manager.herokuapp.com/api/v1/";
+    public static final String URL_API = "https://outer-space-manager-staging.herokuapp.com/api/v1/";
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String TOKEN = "token";

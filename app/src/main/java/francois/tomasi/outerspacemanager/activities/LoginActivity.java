@@ -135,6 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (Objects.equals(response.code(), 200)) {
                                     SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
                                     SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Votre compte à bien été créé", Snackbar.LENGTH_LONG);
+
+                                    layoutLoadingLogin.setVisibility(View.GONE);
                                     findViewById(R.id.btnSignIn).callOnClick();
                                 } else {
                                     try {
@@ -150,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<CreateUserResponse> call, @NonNull Throwable t) {
-                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau", Snackbar.LENGTH_LONG);
+                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Impossible de joindre le serveur", Snackbar.LENGTH_LONG);
                                 layoutLoadingLogin.setVisibility(View.GONE);
                                 linearLayoutSignUp.setVisibility(View.VISIBLE);
                             }
