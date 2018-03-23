@@ -3,13 +3,12 @@ package francois.tomasi.outerspacemanager.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import francois.tomasi.outerspacemanager.R;
-import francois.tomasi.outerspacemanager.helpers.Constants;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
 import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
 import francois.tomasi.outerspacemanager.models.User;
@@ -39,20 +37,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final TextInputLayout wrapperEmail = findViewById(R.id.wrapperEmail);
-
         final EditText editTxtUsername = findViewById(R.id.editTxtUsername);
         final EditText editTxtEmail = findViewById(R.id.editTxtEmail);
         final EditText editTxtPassword = findViewById(R.id.editTxtPassword);
 
         final LinearLayout linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
         final LinearLayout linearLayoutSignUp = findViewById(R.id.linearLayoutSignUp);
-        final LinearLayout layoutLoadingLogin = findViewById(R.id.layoutLoadingLogin);
+        final LinearLayout linearLayoutLoadingLogin = findViewById(R.id.linearLayoutLoadingLogin);
 
         Button btnConnect = findViewById(R.id.btnConnect);
         Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
-        Button btnSignUp = findViewById(R.id.btnSignUp);
-        Button btnSignIn = findViewById(R.id.btnSignIn);
+
+        TextView txtViewNoAcount = findViewById(R.id.txtViewNoAcount);
+        TextView txtViewAlreadyAccount = findViewById(R.id.txtViewAlreadyAccount);
 
 
         // DEV CONFIG
@@ -60,17 +57,21 @@ public class LoginActivity extends AppCompatActivity {
         editTxtEmail.setText("francoistomasi@hotmail.fr");
         editTxtPassword.setText("licencedim");
 
+        if(!Objects.equals(SharedPreferencesHelper.getToken(getApplicationContext()), "") && SharedPreferencesHelper.getExpires(getApplicationContext()) > System.currentTimeMillis() / 1000) {
+            goToMainActivity();
+        }
+
         btnConnect.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    linearLayoutLoadingLogin.setVisibility(View.VISIBLE);
+                    linearLayoutSignIn.setVisibility(View.GONE);
+
                     String username = editTxtUsername.getText().toString();
                     String password = editTxtPassword.getText().toString();
 
                     final User user = new User(username, password);
-
-                    layoutLoadingLogin.setVisibility(View.VISIBLE);
-                    linearLayoutSignIn.setVisibility(View.GONE);
 
                     Call<ConnectUserResponse> request = service.connectUser(user);
 
@@ -79,22 +80,21 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(@NonNull Call<ConnectUserResponse> call, @NonNull Response<ConnectUserResponse> response) {
                             if (Objects.equals(response.code(), 200)) {
                                 SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
+                                SharedPreferencesHelper.setExpires(getApplicationContext(), response.body().getExpires());
 
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra(Constants.USER_CONNECTED, user);
-                                startActivity(intent);
+                                goToMainActivity();
                                 finish();
                             } else {
-                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Le mot de passe ou le pseudo sont erronés", Snackbar.LENGTH_LONG);
-                                layoutLoadingLogin.setVisibility(View.GONE);
+                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Le mot de passe ou le pseudo sont erronés");
+                                linearLayoutLoadingLogin.setVisibility(View.GONE);
                                 linearLayoutSignIn.setVisibility(View.VISIBLE);
                             }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<ConnectUserResponse> call, @NonNull Throwable t) {
-                            SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau", Snackbar.LENGTH_LONG);
-                            layoutLoadingLogin.setVisibility(View.GONE);
+                            SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau");
+                            linearLayoutLoadingLogin.setVisibility(View.GONE);
                             linearLayoutSignIn.setVisibility(View.VISIBLE);
                         }
                     });
@@ -102,13 +102,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         );
 
-        btnSignUp.setOnClickListener(
+        txtViewNoAcount.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    wrapperEmail.setVisibility(View.VISIBLE);
-                    linearLayoutSignIn.setVisibility(View.GONE);
                     linearLayoutSignUp.setVisibility(View.VISIBLE);
+                    linearLayoutSignIn.setVisibility(View.GONE);
+                    editTxtEmail.setVisibility(View.VISIBLE);
                 }
             }
         );
@@ -124,8 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (!(username.matches("") || email.matches("") || password.matches(""))) {
                         User user = new User(username, email, password);
 
-                        layoutLoadingLogin.setVisibility(View.VISIBLE);
                         linearLayoutSignUp.setVisibility(View.GONE);
+                        linearLayoutLoadingLogin.setVisibility(View.VISIBLE);
 
                         Call<CreateUserResponse> request = service.createUser(user);
 
@@ -134,15 +134,15 @@ public class LoginActivity extends AppCompatActivity {
                             public void onResponse(@NonNull Call<CreateUserResponse> call, @NonNull Response<CreateUserResponse> response) {
                                 if (Objects.equals(response.code(), 200)) {
                                     SharedPreferencesHelper.setToken(getApplicationContext(), response.body().getToken());
-                                    SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Votre compte à bien été créé", Snackbar.LENGTH_LONG);
+                                    SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Votre compte à bien été créé");
 
-                                    layoutLoadingLogin.setVisibility(View.GONE);
-                                    findViewById(R.id.btnSignIn).callOnClick();
+                                    linearLayoutLoadingLogin.setVisibility(View.GONE);
+                                    findViewById(R.id.txtViewAlreadyAccount).callOnClick();
                                 } else {
                                     try {
                                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), jObjError.getString("message"), Snackbar.LENGTH_LONG);
-                                        layoutLoadingLogin.setVisibility(View.GONE);
+                                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), jObjError.getString("message"));
+                                        linearLayoutLoadingLogin.setVisibility(View.GONE);
                                         linearLayoutSignUp.setVisibility(View.VISIBLE);
                                     } catch (IOException | JSONException e) {
                                         e.printStackTrace();
@@ -152,34 +152,34 @@ public class LoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(@NonNull Call<CreateUserResponse> call, @NonNull Throwable t) {
-                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Impossible de joindre le serveur", Snackbar.LENGTH_LONG);
-                                layoutLoadingLogin.setVisibility(View.GONE);
+                                SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Impossible de joindre le serveur");
+                                linearLayoutLoadingLogin.setVisibility(View.GONE);
                                 linearLayoutSignUp.setVisibility(View.VISIBLE);
                             }
                         });
                     } else {
-                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Champs incomplets", Snackbar.LENGTH_LONG);
-                        layoutLoadingLogin.setVisibility(View.GONE);
+                        SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Champs incomplets");
                         linearLayoutSignUp.setVisibility(View.VISIBLE);
+                        linearLayoutLoadingLogin.setVisibility(View.GONE);
                     }
                 }
             }
         );
 
-        btnSignIn.setOnClickListener(
+        txtViewAlreadyAccount.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    wrapperEmail.setVisibility(View.GONE);
-                    linearLayoutSignIn.setVisibility(View.VISIBLE);
                     linearLayoutSignUp.setVisibility(View.GONE);
+                    linearLayoutSignIn.setVisibility(View.VISIBLE);
+                    editTxtEmail.setVisibility(View.GONE);
                 }
             }
         );
     }
 
-    @Override
-    public void onBackPressed() {
-        findViewById(R.id.btnSignIn).callOnClick();
+    public void goToMainActivity(){
+        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainActivity);
     }
 }

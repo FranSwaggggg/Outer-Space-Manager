@@ -7,6 +7,7 @@ public class Constants {
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public static final String TOKEN = "token";
+    public static final String EXPIRES = "expires";
 
     public static final String HEADER_TOKEN = "x-access-token";
 

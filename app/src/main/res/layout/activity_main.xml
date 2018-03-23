@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -12,170 +10,221 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <ProgressBar
-                    android:id="@+id/loaderUserInfos"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_centerInParent="true" />
-
-                <LinearLayout
-                    android:id="@+id/layoutUserInfos"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:animateLayoutChanges="true">
+
+                    <ProgressBar
+                        android:id="@+id/loaderUserInfos"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/lightGrey"
+                        android:visibility="visible" />
+
 
                     <LinearLayout
+                        android:id="@+id/layoutUserInfos"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtUsername"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Username"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txtPoints"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="0 pts"
-                            android:textSize="30sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="40dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/txtMinerals"
+                            <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="Minerals"
-                                android:textSize="26sp"
-                                android:textStyle="bold" />
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/mineral_icon"
+                                    app:srcCompat="@drawable/ic_mineral" />
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/txtMineralsValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/superstar_x"
                                 android:gravity="center"
-                                android:text="0"
-                                android:textSize="22sp" />
+                                android:textColor="@color/lightGrey"
+                                android:textSize="24sp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginBottom="40dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="40dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/txtGas"
+                            <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="Gas"
-                                android:textSize="26sp"
-                                android:textStyle="bold" />
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/oil_icon"
+                                    app:srcCompat="@drawable/ic_oil" />
+                            </FrameLayout>
 
                             <TextView
                                 android:id="@+id/txtGasValue"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/superstar_x"
                                 android:gravity="center"
-                                android:text="0"
-                                android:textSize="22sp" />
+                                android:textColor="@color/lightGrey"
+                                android:textSize="24sp" />
                         </LinearLayout>
+
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutButtons"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btnBuildings"
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/buildings" />
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/btnFleet"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/fleet" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:dividerPadding="10dp">
 
-                <Button
-                    android:id="@+id/btnResearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/research" />
+                        <Button
+                            android:id="@+id/btnInfos"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/infos"
+                            android:textSize="18sp" />
 
-                <Button
-                    android:id="@+id/btnShipyard"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/space_shipyard" />
+                        <Button
+                            android:id="@+id/btnBuildings"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/buildings"
+                            android:textSize="18sp" />
+                    </TableRow>
 
-                <Button
-                    android:id="@+id/btnGalaxy"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/galaxy" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:dividerPadding="10dp">
+
+                        <Button
+                            android:id="@+id/btnFleet"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/fleet"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/btnResearch"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/research"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:dividerPadding="10dp">
+
+                        <Button
+                            android:id="@+id/btnShipyard"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/space_shipyard"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/btnGalaxy"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/button"
+                            android:fontFamily="@font/superstar_x"
+                            android:padding="10dp"
+                            android:text="@string/galaxy"
+                            android:textSize="18sp" />
+                    </TableRow>
+
+                </TableLayout>
 
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

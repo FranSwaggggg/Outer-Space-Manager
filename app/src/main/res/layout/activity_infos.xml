@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayoutInfos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewProfilePicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/profil_picture_description"
+                        app:srcCompat="@drawable/ic_astronaut" />
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/loaderUserInfos"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateTint="@color/lightGrey"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutUserInfos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <TextView
+                            android:id="@+id/txtViewUsername"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="center"
+                            android:text="FranSwaggggg"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="38sp" />
+
+                        <TextView
+                            android:id="@+id/txtViewPoints"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="center"
+                            android:text="1 457 pts"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="28sp" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutRessources"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            android:paddingBottom="20dp"
+                            android:paddingTop="40dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginBottom="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageViewMineral"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="@string/mineral_icon"
+                                        app:srcCompat="@drawable/ic_mineral" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/txtMineralsValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/superstar_x"
+                                    android:gravity="center"
+                                    android:textColor="@color/lightGrey"
+                                    android:textSize="24sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginBottom="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageViewOil"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="@string/oil_icon"
+                                        app:srcCompat="@drawable/ic_oil" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/txtGasValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/superstar_x"
+                                    android:gravity="center"
+                                    android:textColor="@color/lightGrey"
+                                    android:textSize="24sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutRessourcesModifier"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            android:paddingBottom="40dp"
+                            android:paddingTop="20dp"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginBottom="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageViewMineralModifier"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="@string/mineral_icon"
+                                        app:srcCompat="@drawable/ic_mineral_modifier" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/txtMineralsModifierValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/superstar_x"
+                                    android:gravity="center"
+                                    android:textColor="@color/lightGrey"
+                                    android:textSize="24sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginBottom="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageViewOilModifier"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:contentDescription="@string/oil_icon"
+                                        app:srcCompat="@drawable/ic_oil_modifier" />
+
+                                </FrameLayout>
+
+                                <TextView
+                                    android:id="@+id/txtGasModifierValue"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/superstar_x"
+                                    android:gravity="center"
+                                    android:textColor="@color/lightGrey"
+                                    android:textSize="24sp" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

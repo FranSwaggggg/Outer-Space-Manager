@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,9 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.InfosActivity" />
         <activity android:name=".activities.BuildingActivity" />
         <activity android:name=".activities.BuildingDetailActivity" />
         <activity android:name=".activities.FleetActivity" />
+        <activity android:name=".activities.GalaxyActivity" />
     </application>
 
 </manifest>

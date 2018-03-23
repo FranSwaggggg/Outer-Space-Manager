@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp">
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp">
 
     <TextView
-        android:id="@+id/textViewBuildingsTitle"
+        android:id="@+id/textViewGalaxyTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,18 +15,18 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/yagi"
         android:gravity="center"
-        android:text="@string/buildings_title"
+        android:text="@string/galaxy_title"
         android:textColor="@color/lightGrey"
         android:textSize="42sp" />
 
     <ListView
-        android:id="@+id/listViewBuildings"
+        android:id="@+id/listViewUsers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textViewBuildingsTitle"
+        android:layout_below="@+id/textViewGalaxyTitle"
         android:dividerHeight="10dp"
         android:paddingBottom="10dp"
-        tools:listitem="@layout/adapter_row_building" />
-</RelativeLayout>
+        tools:listitem="@layout/adapter_row_galaxy" />
 
+</RelativeLayout>

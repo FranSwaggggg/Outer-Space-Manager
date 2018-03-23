@@ -6,6 +6,7 @@ import francois.tomasi.outerspacemanager.responses.CreateUserResponse;
 import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
 import francois.tomasi.outerspacemanager.responses.GetShipsResponse;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
+import francois.tomasi.outerspacemanager.responses.GetUsersResponse;
 import francois.tomasi.outerspacemanager.responses.UpgradeBuildingResponse;
 import francois.tomasi.outerspacemanager.models.User;
 import retrofit2.Call;
@@ -27,6 +28,10 @@ public interface ApiService {
     // Get data from connected user
     @GET("users/get")
     Call<GetUserResponse> getUser(@Header(Constants.HEADER_TOKEN) String token);
+
+    // Get all users
+    @GET("users/{from}/{limit}")
+    Call<GetUsersResponse> getAllUsers(@Header(Constants.HEADER_TOKEN) String token, @Path("from") int from, @Path("limit") int limit);
 
     // Get buildings list of connected user
     @GET("buildings/list")
