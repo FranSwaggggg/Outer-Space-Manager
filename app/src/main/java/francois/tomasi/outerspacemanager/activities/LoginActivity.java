@@ -57,7 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         editTxtEmail.setText("francoistomasi@hotmail.fr");
         editTxtPassword.setText("licencedim");
 
-        if(!Objects.equals(SharedPreferencesHelper.getToken(getApplicationContext()), "") && SharedPreferencesHelper.getExpires(getApplicationContext()) > System.currentTimeMillis() / 1000) {
+        if(!Objects.equals(SharedPreferencesHelper.getToken(getApplicationContext()), "")
+                && SharedPreferencesHelper.getExpires(getApplicationContext()) > System.currentTimeMillis() / 1000) {
             goToMainActivity();
         }
 

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutBuilding"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp">
+    android:layout_marginStart="10dp"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textViewBuildingsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/yagi"
@@ -19,14 +20,26 @@
         android:textColor="@color/lightGrey"
         android:textSize="42sp" />
 
-    <ListView
-        android:id="@+id/listViewBuildings"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textViewBuildingsTitle"
-        android:dividerHeight="10dp"
-        android:paddingBottom="10dp"
-        tools:listitem="@layout/adapter_row_building" />
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarBuildings"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/lightGrey" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewBuildings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:visibility="invisible"
+            tools:listitem="@layout/adapter_row_building" />
+    </RelativeLayout>
+
+</LinearLayout>
 

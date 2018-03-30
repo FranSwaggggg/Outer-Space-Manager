@@ -16,9 +16,8 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import francois.tomasi.outerspacemanager.R;
-import francois.tomasi.outerspacemanager.helpers.Constants;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
-import francois.tomasi.outerspacemanager.models.User;
+import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
@@ -140,9 +139,6 @@ public class MainActivity extends AppCompatActivity {
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.darkGrey, getTheme()));
 
-        Intent intent = getIntent();
-        final User oldUser = (User) intent.getSerializableExtra(Constants.USER_CONNECTED);
-
         String token = SharedPreferencesHelper.getToken(getApplicationContext());
 
         Call<GetUserResponse> request = service.getUser(token);
@@ -165,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
-
+                SnackBarHelper.createSnackBar(findViewById(R.id.layoutMain), "Erreur réseau");
+                loaderUserInfos.setVisibility(View.GONE);
             }
         });
     }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import francois.tomasi.outerspacemanager.R;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
+import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
@@ -87,7 +88,9 @@ public class InfosActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
-
+                SnackBarHelper.createSnackBar(findViewById(R.id.linearLayoutInfos), "Erreur réseau");
+                loaderUserInfos.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

@@ -4,15 +4,17 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private final String email;
-    private final String username;
-    private final String password;
+    private String email;
+    private String username;
+    private String password;
 
     private float gas;
     private int gasModifier;
     private float minerals;
     private int mineralsModifier;
     private int points;
+
+    private String imageUrl;
 
     public User(String username, String email, String password) {
         this.email = email;
@@ -35,6 +37,12 @@ public class User implements Serializable {
         this.minerals = minerals;
         this.mineralsModifier = mineralsModifier;
         this.points = points;
+    }
+
+    public User(String username, int points, String imageUrl) {
+        this.username = username;
+        this.points = points;
+        this.imageUrl = imageUrl;
     }
 
     public String getEmail() {
@@ -68,4 +76,6 @@ public class User implements Serializable {
     public int getPoints() {
         return points;
     }
+
+    public String getImageUrl() { return imageUrl; }
 }

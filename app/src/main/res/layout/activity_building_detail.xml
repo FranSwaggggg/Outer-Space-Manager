@@ -1,12 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Building detail" />
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/imageViewBuilding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@color/lightGrey" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewBuildingName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/yagi"
+            android:text="@string/building_name"
+            android:textColor="@color/lightGrey"
+            android:textSize="32sp" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutBuildingLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button"
+            android:paddingBottom="5dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/textViewBuildingLevel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fontFamily="@font/superstar_x"
+                android:text="@string/level_x"
+                android:textColor="@color/darkGrey" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/superstar_x"
+                    android:gravity="center"
+                    android:text="@string/cost"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewOilCost"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_mineral" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textViewMineralCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/yagi"
+                        android:gravity="left|center_vertical|center"
+                        android:paddingStart="10dp"
+                        android:text="400"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="21sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imageViewOilCost"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_oil" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textViewGasCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/yagi"
+                        android:gravity="left|center_vertical|center"
+                        android:paddingStart="10dp"
+                        android:text="400"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="21sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewImprovements"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/superstar_x"
+                    android:gravity="center"
+                    android:text="@string/improvements"
+                    android:textColor="@color/lightGrey"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imageViewEffect"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_speed_building" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewEffectValueNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="left|center_vertical|center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:text="0"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="21sp" />
+
+                        <FrameLayout
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:srcCompat="@drawable/ic_straight_right_arrow" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewEffectValueAfterUpgrade"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="left|center_vertical|center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:text="0"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="21sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button"
+            android:fontFamily="@font/superstar_x"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:text="@string/upgrade"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
 </LinearLayout>
