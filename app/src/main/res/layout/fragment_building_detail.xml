@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBuildingDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frameLayoutBuildingImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imageViewBuilding"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/building_image_description"
+                android:scaleType="centerCrop"
+                app:srcCompat="@color/lightGrey" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutBuildingData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewBuildingName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/yagi"
+                android:textColor="@color/lightGrey"
+                android:textSize="32sp"
+                tools:text="Building name" />
+
+            <FrameLayout
+                android:id="@+id/frameLayoutBuildingLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button"
+                android:paddingBottom="5dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textViewBuildingLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/superstar_x"
+                    android:textColor="@color/darkGrey"
+                    tools:text="Level X" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutBuildingInfos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewCost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/superstar_x"
+                        android:gravity="start"
+                        android:text="@string/cost"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewOilCost"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/oil_icon_description"
+                                    app:srcCompat="@drawable/ic_oil" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textViewGasCost"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/yagi"
+                                android:gravity="start|center_vertical|center"
+                                android:paddingEnd="0dp"
+                                android:paddingStart="10dp"
+                                android:textColor="@color/lightGrey"
+                                android:textSize="21sp"
+                                tools:text="400" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="5dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewMineralCost"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/mineral_icon_description"
+                                    app:srcCompat="@drawable/ic_mineral" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textViewMineralCost"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/yagi"
+                                android:gravity="start|center_vertical|center"
+                                android:paddingEnd="0dp"
+                                android:paddingStart="10dp"
+                                android:textColor="@color/lightGrey"
+                                android:textSize="21sp"
+                                tools:text="400" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewImprovements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/superstar_x"
+                        android:gravity="start"
+                        android:text="@string/improvement"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imageViewEffect"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/building_speed_icon_description"
+                                app:srcCompat="@drawable/ic_speed_building" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewEffectValueNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="end|center_vertical|center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="21sp"
+                            tools:text="0" />
+
+                        <FrameLayout
+                            android:layout_width="20dp"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/left_arrow_description"
+                                app:srcCompat="@drawable/ic_straight_right_arrow" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewEffectValueAfterUpgrade"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="start|center_vertical|center"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="21sp"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewImprovements2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/superstar_x"
+                        android:gravity="start"
+                        android:text="@string/construction"
+                        android:textColor="@color/lightGrey"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:id="@+id/imageViewBuildingTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/time_icon_description"
+                                app:srcCompat="@drawable/ic_time" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewBuildingTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/yagi"
+                            android:gravity="center|start"
+                            android:paddingEnd="0dp"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="21sp"
+                            tools:text="1m40s" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="end"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btnUpgradeBuilding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:background="@drawable/button"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/superstar_x"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:text="@string/upgrade"
+                    android:textSize="18sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBarUpgradeBuilding"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/lightGrey"
+                    android:visibility="invisible" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

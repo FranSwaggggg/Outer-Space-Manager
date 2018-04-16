@@ -18,6 +18,7 @@ import java.util.Locale;
 import francois.tomasi.outerspacemanager.R;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
 import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
+import francois.tomasi.outerspacemanager.models.User;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         request.enqueue(new Callback<GetUserResponse>() {
             @Override
             public void onResponse(@NonNull Call<GetUserResponse> call, @NonNull Response<GetUserResponse> response) {
-                final GetUserResponse data = response.body();
+                final User data = new User(response.body());
 
                 Locale locale = getApplicationContext().getResources().getConfiguration().locale;
 

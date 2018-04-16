@@ -7,6 +7,7 @@ public class Building {
     private int buildingId;
     private boolean building;
     private String effect;
+    private String effectAdded;
     private int gasCostByLevel;
     private int gasCostLevel0;
     private String imageUrl;
@@ -17,7 +18,7 @@ public class Building {
     private int timeToBuildLevel0;
 
     Building(int level, int amountOfEffectByLevel, int amountOfEffectLevel0, int buildingId,
-             boolean building, String effect, int gasCostByLevel, int gasCostLevel0,
+             boolean building, String effect, String effectAdded, int gasCostByLevel, int gasCostLevel0,
              String imageUrl, int mineralCostByLevel, int mineralCostLevel0, String name,
              int timeToBuildByLevel, int timeToBuildLevel0) {
         this.level = level;
@@ -26,6 +27,7 @@ public class Building {
         this.buildingId = buildingId;
         this.building = building;
         this.effect = effect;
+        this.effectAdded = effectAdded;
         this.gasCostByLevel = gasCostByLevel;
         this.gasCostLevel0 = gasCostLevel0;
         this.imageUrl = imageUrl;
@@ -36,59 +38,31 @@ public class Building {
         this.timeToBuildLevel0 = timeToBuildLevel0;
     }
 
-    public int getLevel() {
-        return level;
-    }
+    public int getLevel() { return level; }
 
-    public int getAmountOfEffectByLevel() {
-        return amountOfEffectByLevel;
-    }
+    public int getAmountOfEffectByLevel() { return amountOfEffectByLevel; }
 
-    public int getAmountOfEffectLevel0() {
-        return amountOfEffectLevel0;
-    }
+    public int getAmountOfEffectLevel0() { return amountOfEffectLevel0; }
 
-    public int getBuildingId() {
-        return buildingId;
-    }
+    public int getBuildingId() { return buildingId; }
 
-    public boolean isBuilding() {
-        return building;
-    }
+    public boolean isBuilding() { return building; }
 
-    public String getEffect() {
-        return effect;
-    }
+    public String getEffect() { return effect == null ? effectAdded : effect; }
 
-    public int getGasCostByLevel() {
-        return gasCostByLevel;
-    }
+    public int getGasCostByLevel() { return gasCostByLevel; }
 
-    public int getGasCostLevel0() {
-        return gasCostLevel0;
-    }
+    public int getGasCostLevel0() { return gasCostLevel0; }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+    public String getImageUrl() { return imageUrl; }
 
-    public int getMineralCostByLevel() {
-        return mineralCostByLevel;
-    }
+    public int getMineralCostByLevel() { return mineralCostByLevel; }
 
-    public int getMineralCostLevel0() {
-        return mineralCostLevel0;
-    }
+    public int getMineralCostLevel0() { return mineralCostLevel0; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public int getTimeToBuildByLevel() {
-        return timeToBuildByLevel;
-    }
+    public int getTimeToBuildByLevel() { return timeToBuildByLevel; }
 
-    public int getTimeToBuildLevel0() {
-        return timeToBuildLevel0;
-    }
+    public int getTimeToBuildLevel0() { return timeToBuildLevel0; }
 }

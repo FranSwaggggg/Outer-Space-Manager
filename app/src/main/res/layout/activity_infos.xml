@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutInfos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -63,9 +64,9 @@
                             android:layout_marginStart="20dp"
                             android:fontFamily="@font/yagi"
                             android:gravity="center"
-                            android:text="FranSwaggggg"
                             android:textColor="@color/lightGrey"
-                            android:textSize="38sp" />
+                            android:textSize="38sp"
+                            tools:text="FranSwaggggg" />
 
                         <TextView
                             android:id="@+id/txtViewPoints"
@@ -75,9 +76,9 @@
                             android:layout_marginStart="20dp"
                             android:fontFamily="@font/yagi"
                             android:gravity="center"
-                            android:text="1 457 pts"
                             android:textColor="@color/lightGrey"
-                            android:textSize="28sp" />
+                            android:textSize="28sp"
+                            tools:text="1 457 pts" />
 
                         <LinearLayout
                             android:id="@+id/layoutRessources"
@@ -106,7 +107,7 @@
                                         android:id="@+id/imageViewMineral"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:contentDescription="@string/mineral_icon"
+                                        android:contentDescription="@string/mineral_icon_description"
                                         app:srcCompat="@drawable/ic_mineral" />
                                 </FrameLayout>
 
@@ -117,7 +118,8 @@
                                     android:fontFamily="@font/superstar_x"
                                     android:gravity="center"
                                     android:textColor="@color/lightGrey"
-                                    android:textSize="24sp" />
+                                    android:textSize="24sp"
+                                    tools:text="12 000" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -137,7 +139,7 @@
                                         android:id="@+id/imageViewOil"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:contentDescription="@string/oil_icon"
+                                        android:contentDescription="@string/oil_icon_description"
                                         app:srcCompat="@drawable/ic_oil" />
                                 </FrameLayout>
 
@@ -148,7 +150,8 @@
                                     android:fontFamily="@font/superstar_x"
                                     android:gravity="center"
                                     android:textColor="@color/lightGrey"
-                                    android:textSize="24sp" />
+                                    android:textSize="24sp"
+                                    tools:text="4 000" />
                             </LinearLayout>
 
                         </LinearLayout>
@@ -180,7 +183,7 @@
                                         android:id="@+id/imageViewMineralModifier"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:contentDescription="@string/mineral_icon"
+                                        android:contentDescription="@string/mineral_modifier_icon_description"
                                         app:srcCompat="@drawable/ic_mineral_modifier" />
                                 </FrameLayout>
 
@@ -191,7 +194,8 @@
                                     android:fontFamily="@font/superstar_x"
                                     android:gravity="center"
                                     android:textColor="@color/lightGrey"
-                                    android:textSize="24sp" />
+                                    android:textSize="24sp"
+                                    tools:text="3" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -211,7 +215,7 @@
                                         android:id="@+id/imageViewOilModifier"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:contentDescription="@string/oil_icon"
+                                        android:contentDescription="@string/oil_modifier_icon_description"
                                         app:srcCompat="@drawable/ic_oil_modifier" />
 
                                 </FrameLayout>
@@ -223,7 +227,8 @@
                                     android:fontFamily="@font/superstar_x"
                                     android:gravity="center"
                                     android:textColor="@color/lightGrey"
-                                    android:textSize="24sp" />
+                                    android:textSize="24sp"
+                                    tools:text="1" />
                             </LinearLayout>
 
                         </LinearLayout>

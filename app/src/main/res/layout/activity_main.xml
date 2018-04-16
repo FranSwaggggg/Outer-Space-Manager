@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -62,7 +63,7 @@
                                     android:id="@+id/imageView3"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:contentDescription="@string/mineral_icon"
+                                    android:contentDescription="@string/mineral_icon_description"
                                     app:srcCompat="@drawable/ic_mineral" />
                             </FrameLayout>
 
@@ -73,7 +74,8 @@
                                 android:fontFamily="@font/superstar_x"
                                 android:gravity="center"
                                 android:textColor="@color/lightGrey"
-                                android:textSize="24sp" />
+                                android:textSize="24sp"
+                                tools:text="1 345 289" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -95,7 +97,7 @@
                                     android:id="@+id/imageView4"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:contentDescription="@string/oil_icon"
+                                    android:contentDescription="@string/oil_icon_description"
                                     app:srcCompat="@drawable/ic_oil" />
                             </FrameLayout>
 
@@ -106,7 +108,8 @@
                                 android:fontFamily="@font/superstar_x"
                                 android:gravity="center"
                                 android:textColor="@color/lightGrey"
-                                android:textSize="24sp" />
+                                android:textSize="24sp"
+                                tools:text="3 548 950" />
                         </LinearLayout>
 
                     </LinearLayout>

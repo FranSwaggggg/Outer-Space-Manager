@@ -2,6 +2,8 @@ package francois.tomasi.outerspacemanager.models;
 
 import java.io.Serializable;
 
+import francois.tomasi.outerspacemanager.responses.GetUserResponse;
+
 public class User implements Serializable {
 
     private String email;
@@ -23,9 +25,17 @@ public class User implements Serializable {
     }
 
     public User(String username, String password) {
-        this.email = null;
         this.username = username;
         this.password = password;
+    }
+
+    public User(GetUserResponse user) {
+        this.username = user.getUsername();
+        this.points = user.getPoints();
+        this.gas = user.getGas();
+        this.gasModifier = user.getGasModifier();
+        this.minerals = user.getMinerals();
+        this.mineralsModifier = user.getMineralsModifier();
     }
 
     public User(User user, float gas, int gasModifier, float minerals, int mineralsModifier, int points) {

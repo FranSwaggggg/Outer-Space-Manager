@@ -11,26 +11,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 
 import java.util.List;
 
 import francois.tomasi.outerspacemanager.R;
+import francois.tomasi.outerspacemanager.activities.BuildingActivity;
 import francois.tomasi.outerspacemanager.activities.BuildingDetailActivity;
+import francois.tomasi.outerspacemanager.fragments.FragmentBuildingDetail;
+import francois.tomasi.outerspacemanager.helpers.Constants;
 import francois.tomasi.outerspacemanager.models.Building;
 
 public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ViewHolder> {
 
+    private BuildingActivity buildingActivity;
     private static List<Building> buildings;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public BuildingAdapter(BuildingActivity buildingActivity, List<Building> buildings) {
+        this.buildingActivity = buildingActivity;
+        BuildingAdapter.buildings = buildings;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
 
         private ImageView imageViewBuilding;
         private TextView textViewBuildingName;
         private TextView textViewBuildingLevel;
 
-        public ViewHolder(View v) {
+        ViewHolder(View v) {
             super(v);
             context = v.getContext();
 
@@ -41,21 +49,26 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ViewHo
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, BuildingDetailActivity.class);
-                    intent.putExtra("building", new Gson().toJson(buildings.get(getAdapterPosition())));
-                    context.startActivity(intent);
+                    FragmentBuildingDetail fragB = (FragmentBuildingDetail) buildingActivity.getSupportFragmentManager().findFragmentById(R.id.fragmentBuildingDetail);
+
+                    if (fragB == null || !fragB.isInLayout()){
+                        Intent intent = new Intent(context, BuildingDetailActivity.class);
+                        intent.putExtra(Constants.EXTRA_BUILDING_ID, buildings.get(getAdapterPosition()).getBuildingId());
+                        context.startActivity(intent);
+                    } else {
+                        fragB.replaceBuilding(buildings.get(getAdapterPosition()).getBuildingId());
+                    }
                 }
             });
         }
 
-        public void display(Building building) {
+        void display(Building building) {
             Glide.with(context).load(building.getImageUrl()).into(imageViewBuilding);
             textViewBuildingName.setText(building.getName());
             textViewBuildingLevel.setText(String.valueOf("Niveau " + building.getLevel()));
         }
     }
 
-    public BuildingAdapter(List<Building> buildings) { BuildingAdapter.buildings = buildings; }
 
     @NonNull
     @Override

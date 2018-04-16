@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="140dp"
     android:layout_marginBottom="10dp"
@@ -38,10 +39,10 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/yagi"
             android:gravity="center"
-            android:text="@string/building_name"
             android:textColor="@color/darkGrey"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Building name" />
 
         <TextView
             android:id="@+id/textViewBuildingLevel"
@@ -50,9 +51,9 @@
             android:layout_alignParentBottom="true"
             android:fontFamily="@font/superstar_x"
             android:gravity="center"
-            android:text="@string/level_x"
             android:textColor="@color/darkGrey"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            tools:text="Level X" />
 
     </RelativeLayout>
 
