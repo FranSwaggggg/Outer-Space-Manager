@@ -25,6 +25,7 @@ import francois.tomasi.outerspacemanager.models.Building;
 import francois.tomasi.outerspacemanager.models.User;
 import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
+import francois.tomasi.outerspacemanager.responses.UpgradeBuildingResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
 import retrofit2.Call;
@@ -42,7 +43,7 @@ public class FragmentBuildingDetail extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_building_detail, container);
 
-        v.findViewById(R.id.linearLayoutBuildingDetail).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.relativeLayoutBuildingDetail).setVisibility(View.INVISIBLE);
 
         return v;
     }
@@ -71,7 +72,8 @@ public class FragmentBuildingDetail extends Fragment {
 
     protected void setData(final View view, final Building building) {
 
-        LinearLayout linearLayoutBuildingDetail = view.findViewById(R.id.linearLayoutBuildingDetail);
+        LinearLayout linearLayoutBuildingDetail = view.findViewById(R.id.relativeLayoutBuildingDetail);
+        linearLayoutBuildingDetail.setVisibility(View.INVISIBLE);
 
         ImageView imageViewBuilding = view.findViewById(R.id.imageViewBuilding);
         TextView textViewBuildingName = view.findViewById(R.id.textViewBuildingName);
@@ -95,9 +97,6 @@ public class FragmentBuildingDetail extends Fragment {
                 (building.getMineralCostByLevel() * building.getLevel());
         final int gasCost = building.getGasCostLevel0() +
                 (building.getGasCostByLevel() * building.getLevel());
-
-        linearLayoutBuildingDetail.setVisibility(View.VISIBLE);
-        layoutBuildingInfos.setVisibility(View.GONE);
 
         String token = SharedPreferencesHelper.getToken(getContext());
         Call<GetUserResponse> request = service.getUser(token);
@@ -159,7 +158,7 @@ public class FragmentBuildingDetail extends Fragment {
 
         textViewBuildingTime.setText(String.valueOf(timeToBuildString));
 
-        /*btnUpgradeBuilding.setOnClickListener(
+        btnUpgradeBuilding.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,7 +169,7 @@ public class FragmentBuildingDetail extends Fragment {
                     request.enqueue(new Callback<UpgradeBuildingResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<UpgradeBuildingResponse> call, @NonNull Response<UpgradeBuildingResponse> response) {
-                            recreate();
+
                         }
 
                         @Override
@@ -180,6 +179,8 @@ public class FragmentBuildingDetail extends Fragment {
                     });
                 }
             }
-        );*/
+        );
+
+        linearLayoutBuildingDetail.setVisibility(View.VISIBLE);
     }
 }

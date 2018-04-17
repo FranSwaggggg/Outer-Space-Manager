@@ -46,14 +46,13 @@
                         android:layout_height="100dp"
                         android:layout_centerInParent="true"
                         android:indeterminateTint="@color/lightGrey"
-                        android:visibility="visible" />
+                        android:visibility="invisible" />
 
                     <LinearLayout
                         android:id="@+id/layoutUserInfos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="invisible">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/txtViewUsername"
@@ -195,7 +194,7 @@
                                     android:gravity="center"
                                     android:textColor="@color/lightGrey"
                                     android:textSize="24sp"
-                                    tools:text="3" />
+                                    tools:text="1" />
                             </LinearLayout>
 
                             <LinearLayout

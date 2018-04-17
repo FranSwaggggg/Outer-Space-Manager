@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         );
 
+        /*
         btnFleet.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+        */
 
         btnGalaxy.setOnClickListener(
                 new View.OnClickListener() {
@@ -134,14 +136,15 @@ public class MainActivity extends AppCompatActivity {
         final TextView txtGasValue = findViewById(R.id.txtGasValue);
         final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
         final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
+        loaderUserInfos.setVisibility(View.VISIBLE);
 
         final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
+        layoutUserInfos.setVisibility(View.INVISIBLE);
 
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.darkGrey, getTheme()));
 
         String token = SharedPreferencesHelper.getToken(getApplicationContext());
-
         Call<GetUserResponse> request = service.getUser(token);
 
         request.enqueue(new Callback<GetUserResponse>() {

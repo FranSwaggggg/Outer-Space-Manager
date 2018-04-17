@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import francois.tomasi.outerspacemanager.R;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
 import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
@@ -51,16 +53,19 @@ public class InfosActivity extends AppCompatActivity {
     }
 
     protected void setData() {
+        final TextView txtViewUsername = findViewById(R.id.txtViewUsername);
+        final TextView txtViewPoints = findViewById(R.id.txtViewPoints);
         final TextView txtGasValue = findViewById(R.id.txtGasValue);
         final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
         final TextView txtGasModifierValue = findViewById(R.id.txtGasModifierValue);
         final TextView txtMineralsModifierValue = findViewById(R.id.txtMineralsModifierValue);
         final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
+        loaderUserInfos.setVisibility(View.VISIBLE);
 
         final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
+        layoutUserInfos.setVisibility(View.INVISIBLE);
 
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
-
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.darkGrey, getTheme()));
 
         String token = SharedPreferencesHelper.getToken(getApplicationContext());
@@ -71,15 +76,14 @@ public class InfosActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<GetUserResponse> call, @NonNull Response<GetUserResponse> response) {
                 final User data = new User(response.body());
+                Locale locale = getApplicationContext().getResources().getConfiguration().locale;
 
-                txtGasValue.setText(format(getApplicationContext().getResources().getConfiguration().locale,
-                        "%,d", round(data.getGas())));
-                txtMineralsValue.setText(format(getApplicationContext().getResources().getConfiguration().locale,
-                        "%,d", round(data.getMinerals())));
-                txtGasModifierValue.setText(format(getApplicationContext().getResources().getConfiguration().locale,
-                        "%,d", round(data.getGasModifier())));
-                txtMineralsModifierValue.setText(format(getApplicationContext().getResources().getConfiguration().locale,
-                        "%,d", round(data.getMineralsModifier())));
+                txtViewUsername.setText(data.getUsername());
+                txtViewPoints.setText(String.valueOf(format(locale,"%,d", round(data.getPoints())) + " pts"));
+                txtGasValue.setText(format(locale,"%,d", round(data.getGas())));
+                txtMineralsValue.setText(format(locale,"%,d", round(data.getMinerals())));
+                txtGasModifierValue.setText(format(locale,"%,d", round(data.getGasModifier())));
+                txtMineralsModifierValue.setText(format(locale,"%,d", round(data.getMineralsModifier())));
 
                 loaderUserInfos.setVisibility(View.GONE);
                 layoutUserInfos.setVisibility(View.VISIBLE);

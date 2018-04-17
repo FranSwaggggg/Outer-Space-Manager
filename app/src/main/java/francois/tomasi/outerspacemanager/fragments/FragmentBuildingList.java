@@ -41,17 +41,17 @@ public class FragmentBuildingList extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerViewBuildings = view.findViewById(R.id.recyclerViewBuildings);
-
         layoutManager = new LinearLayoutManager(getContext());
 
-        progressBarBuildings = view.findViewById(R.id.progressBarBuildings);
         recyclerViewBuildings = view.findViewById(R.id.recyclerViewBuildings);
         recyclerViewBuildings.setHasFixedSize(true);
         recyclerViewBuildings.setLayoutManager(layoutManager);
+        recyclerViewBuildings.setVisibility(View.INVISIBLE);
+
+        progressBarBuildings = view.findViewById(R.id.progressBarBuildings);
+        progressBarBuildings.setVisibility(View.VISIBLE);
 
         String token = SharedPreferencesHelper.getToken(getContext());
-
         Call<GetBuildingsResponse> request = service.getBuildings(token);
 
         request.enqueue(new Callback<GetBuildingsResponse>() {

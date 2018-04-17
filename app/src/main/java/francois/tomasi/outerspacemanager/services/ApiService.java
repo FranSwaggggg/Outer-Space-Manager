@@ -1,18 +1,18 @@
 package francois.tomasi.outerspacemanager.services;
 
-import francois.tomasi.outerspacemanager.responses.ConnectUserResponse;
 import francois.tomasi.outerspacemanager.helpers.Constants;
+import francois.tomasi.outerspacemanager.models.User;
+import francois.tomasi.outerspacemanager.responses.ConnectUserResponse;
 import francois.tomasi.outerspacemanager.responses.CreateUserResponse;
 import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
-import francois.tomasi.outerspacemanager.responses.GetShipsResponse;
+import francois.tomasi.outerspacemanager.responses.GetFleetResponse;
 import francois.tomasi.outerspacemanager.responses.GetUserResponse;
 import francois.tomasi.outerspacemanager.responses.GetUsersResponse;
 import francois.tomasi.outerspacemanager.responses.UpgradeBuildingResponse;
-import francois.tomasi.outerspacemanager.models.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Header;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -43,5 +43,5 @@ public interface ApiService {
 
     // Get fleet list of connected user
     @GET("fleet/list")
-    Call<GetShipsResponse> getFleet(@Header(Constants.HEADER_TOKEN) String token);
+    Call<GetFleetResponse> getFleet(@Header(Constants.HEADER_TOKEN) String token);
 }
