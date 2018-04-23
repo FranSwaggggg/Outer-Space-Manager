@@ -1,6 +1,7 @@
 package francois.tomasi.outerspacemanager.fragments;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
 import francois.tomasi.outerspacemanager.R;
 import francois.tomasi.outerspacemanager.activities.BuildingActivity;
 import francois.tomasi.outerspacemanager.adapters.BuildingAdapter;
+import francois.tomasi.outerspacemanager.database.DAOBuilding;
+import francois.tomasi.outerspacemanager.database.DAOBuildingStatus;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
 import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
+import francois.tomasi.outerspacemanager.models.Building;
+import francois.tomasi.outerspacemanager.models.BuildingStatus;
 import francois.tomasi.outerspacemanager.responses.GetBuildingsResponse;
 import francois.tomasi.outerspacemanager.services.ApiService;
 import francois.tomasi.outerspacemanager.services.ApiServiceFactory;
@@ -30,7 +40,10 @@ public class FragmentBuildingList extends Fragment {
     private ProgressBar progressBarBuildings;
     private RecyclerView recyclerViewBuildings;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+
+    private Date currentDate;
+    private List<Building> listBuildings;
+    private List<BuildingStatus> listBuildingsStatus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +54,7 @@ public class FragmentBuildingList extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         recyclerViewBuildings = view.findViewById(R.id.recyclerViewBuildings);
         recyclerViewBuildings.setHasFixedSize(true);
@@ -57,7 +70,42 @@ public class FragmentBuildingList extends Fragment {
         request.enqueue(new Callback<GetBuildingsResponse>() {
             @Override
             public void onResponse(@NonNull Call<GetBuildingsResponse> call, @NonNull Response<GetBuildingsResponse> response) {
-                adapter = new BuildingAdapter((BuildingActivity) getActivity(), response.body().getBuildings());
+
+                listBuildings = response.body().getBuildings();
+                currentDate = Calendar.getInstance().getTime();
+
+                DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getContext());
+                Environment.getExternalStorageDirectory();
+                daoBuildingStatus.open();
+                listBuildingsStatus = daoBuildingStatus.getAllBuildingStatus();
+
+                // open building DB
+                DAOBuilding daoBuilding = new DAOBuilding(getContext());
+                daoBuilding.open();
+                // clear all buildings DB
+                daoBuilding.deleteAllBuildings();
+
+                for (Building building : listBuildings) {
+                    // add building to DB
+                    daoBuilding.createBuilding(building);
+
+                    //Clear building construction in DB
+                    for (BuildingStatus buildingStatus : listBuildingsStatus) {
+                        // if building in database and construction is done
+                        if (buildingStatus.getBuildingId() != null) {
+                            if (Objects.equals(String.valueOf(building.getBuildingId()), buildingStatus.getBuildingId())) {
+                                int currentTime = (int) (new Date().getTime() / 1000);
+                                if (currentTime - Integer.parseInt(buildingStatus.getDateConstruction()) > building.getTimeToBuild(false)) {
+                                    if (!daoBuildingStatus.deleteBuildingState(building.getBuildingId()))
+                                        SnackBarHelper.createSnackBar(view, "Error when delete in database");
+                                    listBuildingsStatus.remove(buildingStatus);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                adapter = new BuildingAdapter((BuildingActivity) getActivity(), listBuildings);
                 recyclerViewBuildings.setAdapter(adapter);
 
                 recyclerViewBuildings.setVisibility(View.VISIBLE);
@@ -66,7 +114,7 @@ public class FragmentBuildingList extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<GetBuildingsResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(view.findViewById(R.id.layoutBuilding), "Erreur réseau");
+                SnackBarHelper.createSnackBar(view.findViewById(R.id.layoutBuilding), getString(R.string.network_error));
                 progressBarBuildings.setVisibility(View.GONE);
             }
         });

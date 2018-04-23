@@ -1,8 +1,12 @@
 package francois.tomasi.outerspacemanager.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -30,26 +34,62 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+
     private ApiService service = ApiServiceFactory.create();
+
+    private EditText editTxtUsername;
+    private EditText editTxtEmail;
+    private EditText editTxtPassword;
+
+    private LinearLayout linearLayoutSignIn;
+    private LinearLayout linearLayoutSignUp;
+    private LinearLayout linearLayoutLoadingLogin;
+
+    private Button btnConnect;
+    private Button btnCreateAccount;
+
+    private TextView txtViewNoAcount;
+    private TextView txtViewAlreadyAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText editTxtUsername = findViewById(R.id.editTxtUsername);
-        final EditText editTxtEmail = findViewById(R.id.editTxtEmail);
-        final EditText editTxtPassword = findViewById(R.id.editTxtPassword);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-        final LinearLayout linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
-        final LinearLayout linearLayoutSignUp = findViewById(R.id.linearLayoutSignUp);
-        final LinearLayout linearLayoutLoadingLogin = findViewById(R.id.linearLayoutLoadingLogin);
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                /*
+                Cela signifie que la permission à déjà était demandé et l'utilisateur l'a refusé
+                Vous pouvez aussi expliquer à l'utilisateur pourquoi cette permission est nécessaire
+                et la redemander
+                */
+            } else {
+                // Sinon demander la permission
+                ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            }
+        }
 
-        Button btnConnect = findViewById(R.id.btnConnect);
-        Button btnCreateAccount = findViewById(R.id.btnCreateAccount);
+        editTxtUsername = findViewById(R.id.editTxtUsername);
+        editTxtEmail = findViewById(R.id.editTxtEmail);
+        editTxtPassword = findViewById(R.id.editTxtPassword);
 
-        TextView txtViewNoAcount = findViewById(R.id.txtViewNoAcount);
-        TextView txtViewAlreadyAccount = findViewById(R.id.txtViewAlreadyAccount);
+        linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
+        linearLayoutSignUp = findViewById(R.id.linearLayoutSignUp);
+        linearLayoutLoadingLogin = findViewById(R.id.linearLayoutLoadingLogin);
+
+        btnConnect = findViewById(R.id.btnConnect);
+        btnCreateAccount = findViewById(R.id.btnCreateAccount);
+
+        txtViewNoAcount = findViewById(R.id.txtViewNoAcount);
+        txtViewAlreadyAccount = findViewById(R.id.txtViewAlreadyAccount);
 
 
         // DEV CONFIG
@@ -94,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(@NonNull Call<ConnectUserResponse> call, @NonNull Throwable t) {
-                            SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), "Erreur réseau");
+                            SnackBarHelper.createSnackBar(findViewById(R.id.layoutLogin), getString(R.string.network_error));
                             linearLayoutLoadingLogin.setVisibility(View.GONE);
                             linearLayoutSignIn.setVisibility(View.VISIBLE);
                         }
@@ -182,5 +222,23 @@ public class LoginActivity extends AppCompatActivity {
     public void goToMainActivity(){
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // La permission est acceptée
+                } else {
+                    // La permission est refusée
+                }
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
     }
 }

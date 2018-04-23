@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(findViewById(R.id.layoutMain), "Erreur réseau");
+                SnackBarHelper.createSnackBar(findViewById(R.id.layoutMain), getString(R.string.network_error));
                 loaderUserInfos.setVisibility(View.GONE);
             }
         });

@@ -28,47 +28,25 @@ public class Ship {
         this.timeToBuild = timeToBuild;
     }
 
-    public int getGasCost() {
-        return gasCost;
-    }
+    public int getGasCost() { return gasCost; }
 
-    public int getLife() {
-        return life;
-    }
+    public int getLife() { return life; }
 
-    public int getMaxAttack() {
-        return maxAttack;
-    }
+    public int getMaxAttack() { return maxAttack; }
 
-    public int getMinAttack() {
-        return minAttack;
-    }
+    public int getMinAttack() { return minAttack; }
 
-    public int getMineralCost() {
-        return mineralCost;
-    }
+    public int getMineralCost() { return mineralCost; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public int getShipId() {
-        return shipId;
-    }
+    public int getShipId() { return shipId; }
 
-    public int getShield() {
-        return shield;
-    }
+    public int getShield() { return shield; }
 
-    public int getSpatioportLevelNeeded() {
-        return spatioportLevelNeeded;
-    }
+    public int getSpatioportLevelNeeded() { return spatioportLevelNeeded; }
 
-    public int getSpeed() {
-        return speed;
-    }
+    public int getSpeed() { return speed; }
 
-    public int getTimeToBuild() {
-        return timeToBuild;
-    }
+    public int getTimeToBuild() { return timeToBuild; }
 }

@@ -30,12 +30,33 @@ public class InfosActivity extends AppCompatActivity {
 
     private ApiService service = ApiServiceFactory.create();
 
+    private TextView txtViewUsername;
+    private TextView txtViewPoints;
+    private TextView txtGasValue;
+    private TextView txtMineralsValue;
+    private TextView txtGasModifierValue;
+    private TextView txtMineralsModifierValue;
+
+    private ProgressBar loaderUserInfos;
+
+    private LinearLayout layoutUserInfos;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos);
 
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        txtViewUsername = findViewById(R.id.txtViewUsername);
+        txtViewPoints = findViewById(R.id.txtViewPoints);
+        txtGasValue = findViewById(R.id.txtGasValue);
+        txtMineralsValue = findViewById(R.id.txtMineralsValue);
+        txtGasModifierValue = findViewById(R.id.txtGasModifierValue);
+        txtMineralsModifierValue = findViewById(R.id.txtMineralsModifierValue);
+        loaderUserInfos = findViewById(R.id.loaderUserInfos);
+        layoutUserInfos = findViewById(R.id.layoutUserInfos);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         swipeRefreshLayout.setOnRefreshListener(
             new SwipeRefreshLayout.OnRefreshListener() {
@@ -53,23 +74,12 @@ public class InfosActivity extends AppCompatActivity {
     }
 
     protected void setData() {
-        final TextView txtViewUsername = findViewById(R.id.txtViewUsername);
-        final TextView txtViewPoints = findViewById(R.id.txtViewPoints);
-        final TextView txtGasValue = findViewById(R.id.txtGasValue);
-        final TextView txtMineralsValue = findViewById(R.id.txtMineralsValue);
-        final TextView txtGasModifierValue = findViewById(R.id.txtGasModifierValue);
-        final TextView txtMineralsModifierValue = findViewById(R.id.txtMineralsModifierValue);
-        final ProgressBar loaderUserInfos = findViewById(R.id.loaderUserInfos);
         loaderUserInfos.setVisibility(View.VISIBLE);
-
-        final LinearLayout layoutUserInfos = findViewById(R.id.layoutUserInfos);
         layoutUserInfos.setVisibility(View.INVISIBLE);
 
-        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.darkGrey, getTheme()));
 
         String token = SharedPreferencesHelper.getToken(getApplicationContext());
-
         Call<GetUserResponse> request = service.getUser(token);
 
         request.enqueue(new Callback<GetUserResponse>() {
@@ -93,7 +103,7 @@ public class InfosActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(findViewById(R.id.linearLayoutInfos), "Erreur réseau");
+                SnackBarHelper.createSnackBar(findViewById(R.id.linearLayoutInfos), getString(R.string.network_error));
                 loaderUserInfos.setVisibility(View.GONE);
                 swipeRefreshLayout.setRefreshing(false);
             }

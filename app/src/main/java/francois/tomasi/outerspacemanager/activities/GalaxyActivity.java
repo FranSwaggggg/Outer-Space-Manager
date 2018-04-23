@@ -67,7 +67,7 @@ public class GalaxyActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<GetUsersResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(findViewById(R.id.layoutGalaxy), "Erreur réseau");
+                SnackBarHelper.createSnackBar(findViewById(R.id.layoutGalaxy), getString(R.string.network_error));
             }
         });
     }

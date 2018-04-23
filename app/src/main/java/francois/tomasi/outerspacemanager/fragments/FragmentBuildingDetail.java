@@ -1,5 +1,6 @@
 package francois.tomasi.outerspacemanager.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import francois.tomasi.outerspacemanager.R;
+import francois.tomasi.outerspacemanager.database.DAOBuildingStatus;
 import francois.tomasi.outerspacemanager.helpers.SharedPreferencesHelper;
 import francois.tomasi.outerspacemanager.helpers.SnackBarHelper;
 import francois.tomasi.outerspacemanager.models.Building;
@@ -38,17 +40,72 @@ public class FragmentBuildingDetail extends Fragment {
 
     private ApiService service = ApiServiceFactory.create();
 
+    private LinearLayout layoutBuildingDetail;
+    private LinearLayout layoutBuildingInfos;
+    private LinearLayout layoutBuildingInProgress;
+
+    private ProgressBar progressBarBuildingDetail;
+    private ProgressBar progressBarBuildingInfos;
+
+    private ImageView imageViewBuilding;
+    private Button btnUpgradeBuilding;
+
+    private TextView textViewBuildingName;
+    private TextView textViewBuildingLevel;
+
+
+    private TextView textViewMineralCost;
+    private TextView textViewGasCost;
+
+    private ImageView imageViewEffect;
+    private TextView textViewEffectValueNow;
+    private TextView textViewEffectValueAfterUpgrade;
+
+    private TextView textViewBuildingTime;
+
+    private TextView textViewNotEnoughtRessources;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_building_detail, container);
 
-        v.findViewById(R.id.relativeLayoutBuildingDetail).setVisibility(View.INVISIBLE);
+        layoutBuildingDetail = v.findViewById(R.id.layoutBuildingDetail);
+        layoutBuildingInfos = v.findViewById(R.id.layoutBuildingInfos);
+        layoutBuildingInProgress = v.findViewById(R.id.layoutBuildingInProgress);
+
+        progressBarBuildingDetail = v.findViewById(R.id.progressBarBuildingDetail);
+        progressBarBuildingInfos = v.findViewById(R.id.progressBarBuildingInfos);
+
+        imageViewBuilding = v.findViewById(R.id.imageViewBuilding);
+        btnUpgradeBuilding = v.findViewById(R.id.btnUpgradeBuilding);
+
+        textViewBuildingName = v.findViewById(R.id.textViewBuildingName);
+        textViewBuildingLevel = v.findViewById(R.id.textViewBuildingLevel);
+
+        textViewMineralCost = v.findViewById(R.id.textViewMineralCost);
+        textViewGasCost = v.findViewById(R.id.textViewGasCost);
+
+        imageViewEffect = v.findViewById(R.id.imageViewEffect);
+        textViewEffectValueNow = v.findViewById(R.id.textViewEffectValueNow);
+        textViewEffectValueAfterUpgrade = v.findViewById(R.id.textViewEffectValueAfterUpgrade);
+
+        textViewBuildingTime = v.findViewById(R.id.textViewBuildingTime);
+
+        textViewNotEnoughtRessources = v.findViewById(R.id.textViewNotEnoughtRessources);
+
+        layoutBuildingDetail.setVisibility(View.INVISIBLE);
+        layoutBuildingInfos.setVisibility(View.GONE);
+        layoutBuildingInProgress.setVisibility(View.GONE);
+        textViewNotEnoughtRessources.setVisibility(View.GONE);
+        btnUpgradeBuilding.setEnabled(false);
 
         return v;
     }
 
     public void replaceBuilding(final int buildingId) {
+
+        progressBarBuildingDetail.setVisibility(View.VISIBLE);
 
         String token = SharedPreferencesHelper.getToken(getContext());
         Call<GetBuildingsResponse> request = service.getBuildings(token);
@@ -57,83 +114,36 @@ public class FragmentBuildingDetail extends Fragment {
             @Override
             public void onResponse(@NonNull Call<GetBuildingsResponse> call,
                                    @NonNull Response<GetBuildingsResponse> response) {
-                final Building building = response.body().getBuildings().get(buildingId);
+                if (response.code() == 200) {
+                    final Building building = response.body().getBuildings().get(buildingId);
 
-                setData(getView(), building);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<GetBuildingsResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(getView().findViewById(R.id.layoutBuildingDetail),
-                        "Erreur réseau");
-            }
-        });
-    }
-
-    protected void setData(final View view, final Building building) {
-
-        LinearLayout linearLayoutBuildingDetail = view.findViewById(R.id.relativeLayoutBuildingDetail);
-        linearLayoutBuildingDetail.setVisibility(View.INVISIBLE);
-
-        ImageView imageViewBuilding = view.findViewById(R.id.imageViewBuilding);
-        TextView textViewBuildingName = view.findViewById(R.id.textViewBuildingName);
-        TextView textViewBuildingLevel = view.findViewById(R.id.textViewBuildingLevel);
-
-        final LinearLayout layoutBuildingInfos = view.findViewById(R.id.layoutBuildingInfos);
-
-        TextView textViewMineralCost = view.findViewById(R.id.textViewMineralCost);
-        TextView textViewGasCost = view.findViewById(R.id.textViewGasCost);
-
-        ImageView imageViewEffect = view.findViewById(R.id.imageViewEffect);
-        TextView textViewEffectValueNow = view.findViewById(R.id.textViewEffectValueNow);
-        TextView textViewEffectValueAfterUpgrade = view.findViewById(R.id.textViewEffectValueAfterUpgrade);
-
-        TextView textViewBuildingTime = view.findViewById(R.id.textViewBuildingTime);
-
-        final Button btnUpgradeBuilding = view.findViewById(R.id.btnUpgradeBuilding);
-        final ProgressBar progressBarUpgradeBuilding = view.findViewById(R.id.progressBarUpgradeBuilding);
-
-        final int mineralCost = building.getMineralCostLevel0() +
-                (building.getMineralCostByLevel() * building.getLevel());
-        final int gasCost = building.getGasCostLevel0() +
-                (building.getGasCostByLevel() * building.getLevel());
-
-        String token = SharedPreferencesHelper.getToken(getContext());
-        Call<GetUserResponse> request = service.getUser(token);
-
-        request.enqueue(new Callback<GetUserResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<GetUserResponse> call,
-                                   @NonNull Response<GetUserResponse> response) {
-                final User user = new User(response.body());
-
-                if ((mineralCost < user.getMinerals()) && (gasCost < user.getGas())) {
-                    progressBarUpgradeBuilding.setVisibility(View.GONE);
-                    btnUpgradeBuilding.setVisibility(View.VISIBLE);
-                    if (!building.isBuilding()) {
-                        layoutBuildingInfos.setVisibility(View.VISIBLE);
-                        btnUpgradeBuilding.setEnabled(true);
-                    } else {
-                        layoutBuildingInfos.setVisibility(View.GONE);
-                        btnUpgradeBuilding.setEnabled(false);
-                    }
-                } else {
-                    btnUpgradeBuilding.setEnabled(false);
+                    layoutBuildingDetail.setVisibility(View.VISIBLE);
+                    setData(building);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
-                SnackBarHelper.createSnackBar(view.findViewById(R.id.layoutBuildingDetail),
-                        "Erreur réseau");
+            public void onFailure(@NonNull Call<GetBuildingsResponse> call, @NonNull Throwable t) {
+                SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.network_error));
             }
         });
+    }
+
+    protected void setData(final Building building) {
+
+        Locale locale = getResources().getConfiguration().locale;
+
+        progressBarBuildingDetail.setVisibility(View.INVISIBLE);
+        progressBarBuildingInfos.setVisibility(View.VISIBLE);
 
         Glide.with(getContext()).load(building.getImageUrl()).into(imageViewBuilding);
         textViewBuildingName.setText(building.getName());
         textViewBuildingLevel.setText(String.valueOf("Niveau " + building.getLevel()));
 
-        Locale locale = getContext().getResources().getConfiguration().locale;
+        final int mineralCost = building.getMineralCostLevel0() +
+                (building.getMineralCostByLevel() * building.getLevel());
+        final int gasCost = building.getGasCostLevel0() +
+                (building.getGasCostByLevel() * building.getLevel());
 
         textViewMineralCost.setText(format(locale, "%,d", mineralCost));
         textViewGasCost.setText(format(locale, "%,d", gasCost));
@@ -153,34 +163,101 @@ public class FragmentBuildingDetail extends Fragment {
         int timeToBuild = (building.getTimeToBuildLevel0() +
                 (building.getTimeToBuildByLevel() * building.getLevel()));
 
-        SimpleDateFormat formatter = new SimpleDateFormat("mm'm'ss's'");
+        SimpleDateFormat formatter = new SimpleDateFormat("mm'm'ss's'", locale);
         String timeToBuildString = formatter.format(new Date(timeToBuild * 1000L));
 
         textViewBuildingTime.setText(String.valueOf(timeToBuildString));
+
+        String token = SharedPreferencesHelper.getToken(getContext());
+        Call<GetUserResponse> request = service.getUser(token);
+
+        request.enqueue(new Callback<GetUserResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetUserResponse> call,
+                                   @NonNull Response<GetUserResponse> response) {
+                final User user = new User(response.body());
+
+                if (mineralCost > user.getMinerals() || gasCost > user.getGas() || building.isBuilding()) {
+
+                    btnUpgradeBuilding.setEnabled(false);
+                    layoutBuildingInfos.setVisibility(View.GONE);
+
+                    if (building.isBuilding()) {
+                        layoutBuildingInProgress.setVisibility(View.VISIBLE);
+                    } else {
+                        textViewNotEnoughtRessources.setText(R.string.not_enought_ressources);
+                        textViewNotEnoughtRessources.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    btnUpgradeBuilding.setEnabled(true);
+                    layoutBuildingInfos.setVisibility(View.VISIBLE);
+                }
+
+                progressBarBuildingInfos.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetUserResponse> call, @NonNull Throwable t) {
+                SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.network_error));
+            }
+        });
 
         btnUpgradeBuilding.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String token = SharedPreferencesHelper.getToken(getContext());
-
                     Call<UpgradeBuildingResponse> request = service.upgradeBuilding(token, building.getBuildingId());
 
                     request.enqueue(new Callback<UpgradeBuildingResponse>() {
                         @Override
-                        public void onResponse(@NonNull Call<UpgradeBuildingResponse> call, @NonNull Response<UpgradeBuildingResponse> response) {
+                        public void onResponse(@NonNull Call<UpgradeBuildingResponse> call,
+                                               @NonNull Response<UpgradeBuildingResponse> response) {
+                            switch (response.code()) {
+                                case 200:
+                                    DAOBuildingStatus daoBuildingStatus = new DAOBuildingStatus(getContext());
+                                    daoBuildingStatus.open();
+                                    int currentTime = (int) (new Date().getTime() / 1000);
+                                    daoBuildingStatus.createBuildingStatus(building.getBuildingId(), "true", String.valueOf(currentTime));
 
+                                    layoutBuildingInfos.setVisibility(View.INVISIBLE);
+                                    layoutBuildingInProgress.setVisibility(View.VISIBLE);
+                                    btnUpgradeBuilding.setEnabled(false);
+                                    SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.imrovement_started));
+                                    break;
+                                case 401:
+                                    if (response.message().equals("already_in_queue"))
+                                        SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.building_already_in_queue));
+                                    else if (response.message().equals("not_enough_resources"))
+                                        SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.not_enought_ressources));
+                                    break;
+                                case 403:
+                                    SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.invalid_token));
+                                    break;
+                                case 404:
+                                    SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.unknown_building));
+                                    break;
+                                case 500:
+                                    SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.server_error));
+                                    break;
+                            }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<UpgradeBuildingResponse> call, @NonNull Throwable t) {
-                            SnackBarHelper.createSnackBar(view.findViewById(R.id.layoutBuildingDetail), "Erreur réseau");
+                            SnackBarHelper.createSnackBar(layoutBuildingDetail, getString(R.string.network_error));
                         }
                     });
                 }
             }
         );
+    }
 
-        linearLayoutBuildingDetail.setVisibility(View.VISIBLE);
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            getActivity().finish();
     }
 }

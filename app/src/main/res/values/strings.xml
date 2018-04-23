@@ -25,6 +25,12 @@
     <string name="galaxy_title">Galaxie</string>
     <string name="improvement">Amélioration</string>
     <string name="cost">Coût</string>
+    <string name="not_enought_ressources">Ressources insuffisantes</string>
+    <string name="construction">Construction</string>
+    <string name="imrovement_started">Amélioration démarrée</string>
+    <string name="unknown_building">Batîment introuvable</string>
+    <string name="server_error">Erreur server</string>
+    <string name="invalid_token">Token invalide</string>
 
     <string name="outer_space_manager_logo_description" translatable="false">Outer Space Manager Logo</string>
     <string name="profil_picture_description" translatable="false">Profil picture</string>
@@ -36,6 +42,7 @@
     <string name="left_arrow_description" translatable="false">Left arrow icon</string>
     <string name="oil_modifier_icon_description" translatable="false">Oil modifier icon</string>
     <string name="mineral_modifier_icon_description" translatable="false">Mineral modifier icon</string>
-    <string name="not_enought_ressources">Ressources insuffisantes</string>
-    <string name="construction">Construction</string>
+    <string name="building_already_in_queue">Batîment en cours d\'amélioration</string>
+    <string name="network_error">Erreur réseau</string>
+    <string name="building_in_progress">Construction en cours</string>
 </resources>

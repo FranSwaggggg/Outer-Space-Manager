@@ -14,7 +14,7 @@ public class BuildingDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_detail);
 
-        FragmentBuildingDetail fragB = (FragmentBuildingDetail) getSupportFragmentManager().findFragmentById(R.id.fragmentBuildingDetail);
-        fragB.replaceBuilding(getIntent().getIntExtra(Constants.EXTRA_BUILDING_ID, 0));
+        FragmentBuildingDetail fragmentBuildingDetail = (FragmentBuildingDetail) getSupportFragmentManager().findFragmentById(R.id.fragmentBuildingDetail);
+        fragmentBuildingDetail.replaceBuilding(getIntent().getIntExtra(Constants.EXTRA_BUILDING_ID, 0));
     }
 }
