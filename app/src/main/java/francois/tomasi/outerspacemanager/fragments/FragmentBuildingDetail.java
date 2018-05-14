@@ -106,6 +106,7 @@ public class FragmentBuildingDetail extends Fragment {
     public void replaceBuilding(final int buildingId) {
 
         progressBarBuildingDetail.setVisibility(View.VISIBLE);
+        layoutBuildingDetail.setVisibility(View.INVISIBLE);
 
         String token = SharedPreferencesHelper.getToken(getContext());
         Call<GetBuildingsResponse> request = service.getBuildings(token);
@@ -117,8 +118,8 @@ public class FragmentBuildingDetail extends Fragment {
                 if (response.code() == 200) {
                     final Building building = response.body().getBuildings().get(buildingId);
 
-                    layoutBuildingDetail.setVisibility(View.VISIBLE);
                     setData(building);
+                    layoutBuildingDetail.setVisibility(View.VISIBLE);
                 }
             }
 

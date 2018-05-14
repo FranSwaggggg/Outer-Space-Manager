@@ -104,6 +104,7 @@ public class FragmentSearchDetail extends Fragment {
     public void replaceSearch(final int searchId) {
 
         progressBarSearchDetail.setVisibility(View.VISIBLE);
+        layoutSearchDetail.setVisibility(View.INVISIBLE);
 
         String token = SharedPreferencesHelper.getToken(getContext());
         Call<GetSearchesResponse> request = service.getSearches(token);
@@ -115,8 +116,8 @@ public class FragmentSearchDetail extends Fragment {
                 if (response.code() == 200) {
                     final Search search = response.body().getSearches().get(searchId);
 
-                    layoutSearchDetail.setVisibility(View.VISIBLE);
                     setData(search);
+                    layoutSearchDetail.setVisibility(View.VISIBLE);
                 }
             }
 

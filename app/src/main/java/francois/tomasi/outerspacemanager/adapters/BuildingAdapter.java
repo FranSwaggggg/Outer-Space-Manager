@@ -44,7 +44,7 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ViewHo
 
             imageViewBuilding = v.findViewById(R.id.imageViewBuilding);
             textViewBuildingName = v.findViewById(R.id.textViewBuildingName);
-            textViewBuildingLevel = v.findViewById(R.id.textViewSearchLevel);
+            textViewBuildingLevel = v.findViewById(R.id.textViewBuildingLevel);
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
