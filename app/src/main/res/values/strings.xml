@@ -45,4 +45,8 @@
     <string name="building_already_in_queue">Batîment en cours d\'amélioration</string>
     <string name="network_error">Erreur réseau</string>
     <string name="building_in_progress">Construction en cours</string>
+    <string name="searches_title">Recherches</string>
+    <string name="search_image_description">Search image</string>
+    <string name="unknown_search">Recherche inconnue</string>
+    <string name="error_on_delete_in_database">Erreur de la suppression dans la base de données</string>
 </resources>

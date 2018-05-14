@@ -102,4 +102,17 @@ public class Search {
     public void setTimeToBuildLevel0(int timeToBuildLevel0) {
         this.timeToBuildLevel0 = timeToBuildLevel0;
     }
+
+    // ============== CUSTOM ==============
+
+    public Integer getTimeToBuild(boolean isItForDatabase) {
+        Integer timeWithoutSpeedBuilding;
+
+        if (!isItForDatabase)
+            timeWithoutSpeedBuilding = timeToBuildLevel0 + level * timeToBuildByLevel;
+        else
+            timeWithoutSpeedBuilding =  timeToBuildLevel0 + (level - 1) * timeToBuildByLevel;
+
+        return timeWithoutSpeedBuilding;
+    }
 }

@@ -25,6 +25,9 @@
         <activity android:name=".activities.BuildingActivity" />
         <activity android:name=".activities.BuildingDetailActivity"
                   android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.SearchDetailActivity"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activities.GalaxyActivity" />
     </application>
 

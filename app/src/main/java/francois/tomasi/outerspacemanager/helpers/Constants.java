@@ -12,4 +12,5 @@ public class Constants {
     public static final String HEADER_TOKEN = "x-access-token";
 
     public static final String EXTRA_BUILDING_ID = "buildingId";
+    public static final String EXTRA_SEARCH_ID = "searchId";
 }

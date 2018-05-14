@@ -47,22 +47,22 @@ public class DAOSearch {
         dbHelper.close();
     }
 
-    public Search createSearch(int buildingId, int level, int amountOfEffectByLevel, int amountOfEffectLevel0, boolean building, String effect, int gasCostByLevel, int gasCostLevel0, int mineralCostByLevel, int mineralCostLevel0, String name, int timeToBuildByLevel, int timeToBuildLevel0) {
+    public Search createSearch(Search s) {
 
         ContentValues values = new ContentValues();
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_search_id, buildingId);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_level, level);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_amountOfEffectByLevel, amountOfEffectByLevel);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_amountOfEffectLevel0, amountOfEffectLevel0);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_building, building);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_effect, effect);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_gasCostByLevel, gasCostByLevel);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_gasCostLevel0, gasCostLevel0);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_mineralCostByLevel, mineralCostByLevel);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_mineralCostLevel0, mineralCostLevel0);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_name, name);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_timeToBuildByLevel, timeToBuildByLevel);
-        values.put(OuterSpaceManagerDB.KEY_SEARCH_timeToBuildLevel0, timeToBuildLevel0);
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_search_id, s.getSearchId());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_level, s.getLevel());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_amountOfEffectByLevel, s.getAmountOfEffectByLevel());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_amountOfEffectLevel0, s.getAmountOfEffectLevel0());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_building, s.isBuilding());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_effect, s.getEffect());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_gasCostByLevel, s.getGasCostByLevel());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_gasCostLevel0, s.getGasCostLevel0());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_mineralCostByLevel, s.getMineralCostByLevel());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_mineralCostLevel0, s.getMineralCostLevel0());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_name, s.getName());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_timeToBuildByLevel, s.getTimeToBuildByLevel());
+        values.put(OuterSpaceManagerDB.KEY_SEARCH_timeToBuildLevel0, s.getTimeToBuildLevel0());
         UUID newID = UUID.randomUUID();
         values.put(OuterSpaceManagerDB.KEY_ID, newID.toString());
 

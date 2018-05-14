@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ProgressBar
-            android:id="@+id/progressBarBuildingDetail"
+            android:id="@+id/progressBarSearchDetail"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -20,7 +20,7 @@
             android:visibility="invisible" />
 
         <LinearLayout
-            android:id="@+id/layoutBuildingDetail"
+            android:id="@+id/layoutSearchDetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -35,10 +35,10 @@
                     android:visibility="visible">
 
                     <ImageView
-                        android:id="@+id/imageViewBuilding"
+                        android:id="@+id/imageViewSearch"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="@string/building_image_description"
+                        android:contentDescription="@string/search_image_description"
                         android:scaleType="centerCrop"
                         tools:srcCompat="@color/black" />
 
@@ -53,7 +53,7 @@
                     android:layout_marginEnd="10dp">
 
                     <Button
-                        android:id="@+id/btnUpgradeBuilding"
+                        android:id="@+id/btnUpgradeSearch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -76,14 +76,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewBuildingName"
+                    android:id="@+id/textViewSearchName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/yagi"
                     android:textColor="@color/lightGrey"
                     android:textSize="32sp"
-                    tools:text="Building name" />
+                    tools:text="Search name" />
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                     android:layout_height="match_parent">
 
                     <ProgressBar
-                        android:id="@+id/progressBarBuildingInfos"
+                        android:id="@+id/progressBarSearchInfos"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
@@ -164,7 +164,7 @@
                         android:visibility="gone" />
 
                     <LinearLayout
-                        android:id="@+id/layoutBuildingInfos"
+                        android:id="@+id/layoutSearchInfos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:baselineAligned="false"

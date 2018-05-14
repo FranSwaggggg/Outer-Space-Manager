@@ -15,11 +15,11 @@
         android:layout_marginTop="5dp">
 
         <ImageView
-            android:id="@+id/imageViewBuilding"
+            android:id="@+id/imageViewSearch"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:contentDescription="@string/building_image_description"
+            android:contentDescription="@string/search_image_description"
             android:scaleType="centerCrop"
             app:srcCompat="@color/lightGrey" />
     </FrameLayout>
@@ -31,7 +31,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textViewBuildingName"
+            android:id="@+id/textViewSearchName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/textViewSearchLevel"
@@ -42,7 +42,7 @@
             android:textColor="@color/darkGrey"
             android:textSize="28sp"
             android:textStyle="bold"
-            tools:text="Building name" />
+            tools:text="Search name" />
 
         <TextView
             android:id="@+id/textViewSearchLevel"

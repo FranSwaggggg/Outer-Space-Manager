@@ -81,7 +81,7 @@ public class FragmentBuildingDetail extends Fragment {
         btnUpgradeBuilding = v.findViewById(R.id.btnUpgradeBuilding);
 
         textViewBuildingName = v.findViewById(R.id.textViewBuildingName);
-        textViewBuildingLevel = v.findViewById(R.id.textViewBuildingLevel);
+        textViewBuildingLevel = v.findViewById(R.id.textViewSearchLevel);
 
         textViewMineralCost = v.findViewById(R.id.textViewMineralCost);
         textViewGasCost = v.findViewById(R.id.textViewGasCost);
