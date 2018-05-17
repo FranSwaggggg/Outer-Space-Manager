@@ -49,4 +49,11 @@
     <string name="search_image_description">Search image</string>
     <string name="unknown_search">Recherche inconnue</string>
     <string name="error_on_delete_in_database">Erreur de la suppression dans la base de données</string>
+    <string name="fleet_title">Flotte</string>
+    <string name="life_icon_description">Life icon</string>
+    <string name="shield_icon_description">Shield icon</string>
+    <string name="attack_icon_description">Attack icon</string>
+    <string name="defense">Défense</string>
+    <string name="attack">Attaque</string>
+    <string name="ship_image_description">Ship image</string>
 </resources>

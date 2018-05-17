@@ -24,10 +24,13 @@
         <activity android:name=".activities.InfosActivity" />
         <activity android:name=".activities.BuildingActivity" />
         <activity android:name=".activities.BuildingDetailActivity"
-                  android:configChanges="orientation|keyboardHidden"/>
+            android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activities.FleetActivity" />
+        <activity android:name=".activities.FleetDetailActivity"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activities.SearchActivity" />
         <activity android:name=".activities.SearchDetailActivity"
-                  android:configChanges="orientation|keyboardHidden"/>
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activities.GalaxyActivity" />
     </application>
 

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ProgressBar
-            android:id="@+id/progressBarBuildingDetail"
+            android:id="@+id/progressBarShipDetail"
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -20,7 +20,7 @@
             android:visibility="invisible" />
 
         <LinearLayout
-            android:id="@+id/layoutBuildingDetail"
+            android:id="@+id/layoutShipDetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -35,35 +35,12 @@
                     android:visibility="visible">
 
                     <ImageView
-                        android:id="@+id/imageViewBuilding"
+                        android:id="@+id/imageViewShip"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="@string/building_image_description"
+                        android:contentDescription="@string/search_image_description"
                         android:scaleType="centerCrop"
                         tools:srcCompat="@color/black" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="10dp">
-
-                    <Button
-                        android:id="@+id/btnUpgradeBuilding"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:background="@drawable/button"
-                        android:elevation="0dp"
-                        android:fontFamily="@font/superstar_x"
-                        android:paddingEnd="15dp"
-                        android:paddingStart="15dp"
-                        android:text="@string/upgrade"
-                        android:textSize="18sp" />
 
                 </FrameLayout>
 
@@ -76,42 +53,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewBuildingName"
+                    android:id="@+id/textViewShipName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/yagi"
                     android:textColor="@color/lightGrey"
                     android:textSize="32sp"
-                    tools:text="Building name" />
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/button"
-                    android:paddingBottom="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp">
-
-                    <TextView
-                        android:id="@+id/textViewSearchLevel"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:fontFamily="@font/superstar_x"
-                        android:textColor="@color/darkGrey"
-                        tools:text="Level X" />
-
-                </FrameLayout>
+                    tools:text="Ship name" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <ProgressBar
-                        android:id="@+id/progressBarBuildingInfos"
+                        android:id="@+id/progressBarShipInfos"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
@@ -120,53 +76,11 @@
                         android:visibility="invisible" />
 
                     <LinearLayout
-                        android:id="@+id/layoutBuildingInProgress"
+                        android:id="@+id/layoutShipInfos"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="invisible">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/yagi"
-                            android:text="@string/building_in_progress"
-                            android:textAlignment="center"
-                            android:textColor="@color/lightGrey"
-                            android:textSize="24sp"
-                            android:visibility="visible" />
-
-                        <TextView
-                            android:id="@+id/textViewTimeRemaining"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:fontFamily="@font/yagi"
-                            android:text="12m38s"
-                            android:textAlignment="center"
-                            android:textColor="@color/lightGrey"
-                            android:textSize="30sp"
-                            tools:text="12m38s" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/textViewNotEnoughtRessources"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:fontFamily="@font/yagi"
-                        android:text="@string/not_enought_ressources"
-                        android:textColor="@color/lightGrey"
-                        android:textSize="24sp"
-                        android:visibility="gone" />
-
-                    <LinearLayout
-                        android:id="@+id/layoutBuildingInfos"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:baselineAligned="false"
                         android:orientation="vertical"
                         android:weightSum="2">
@@ -179,13 +93,130 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textViewCost"
+                                android:id="@+id/textViewAttack"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
                                 android:fontFamily="@font/superstar_x"
                                 android:gravity="start"
-                                android:text="@string/cost"
+                                android:text="@string/attack"
+                                android:textColor="@color/lightGrey"
+                                android:textSize="18sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginEnd="20dp"
+                                    android:orientation="horizontal">
+
+                                    <FrameLayout
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:padding="5dp">
+
+                                        <ImageView
+                                            android:id="@+id/imageViewEffect"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:contentDescription="@string/attack_icon_description"
+                                            app:srcCompat="@drawable/ic_attack" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:id="@+id/textViewMinAttack"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:fontFamily="@font/yagi"
+                                        android:gravity="start|center_vertical|center"
+                                        android:paddingEnd="5dp"
+                                        android:paddingStart="10dp"
+                                        android:textColor="@color/lightGrey"
+                                        android:textSize="21sp"
+                                        tools:text="20" />
+
+                                    <FrameLayout
+                                        android:layout_width="20dp"
+                                        android:layout_height="match_parent">
+
+                                        <ImageView
+                                            android:id="@+id/imageViewLine"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:contentDescription="@string/left_arrow_description"
+                                            app:srcCompat="@drawable/ic_straight_line" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:id="@+id/textViewMaxAttack"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:fontFamily="@font/yagi"
+                                        android:gravity="end|center_vertical|center"
+                                        android:paddingEnd="10dp"
+                                        android:paddingStart="5dp"
+                                        android:textColor="@color/lightGrey"
+                                        android:textSize="21sp"
+                                        tools:text="40" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+
+                                    <FrameLayout
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:padding="5dp">
+
+                                        <ImageView
+                                            android:id="@+id/imageViewEffect"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:contentDescription="@string/attack_icon_description"
+                                            app:srcCompat="@drawable/ic_speed_fleet" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:id="@+id/textViewSpeed"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/yagi"
+                                        android:gravity="start|center_vertical|center"
+                                        android:paddingEnd="10dp"
+                                        android:paddingStart="10dp"
+                                        android:textColor="@color/lightGrey"
+                                        android:textSize="21sp"
+                                        tools:text="1000" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textViewDefense"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:fontFamily="@font/superstar_x"
+                                android:gravity="start"
+                                android:text="@string/defense"
                                 android:textColor="@color/lightGrey"
                                 android:textSize="18sp" />
 
@@ -210,12 +241,12 @@
                                             android:id="@+id/imageViewOilCost"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:contentDescription="@string/oil_icon_description"
-                                            app:srcCompat="@drawable/ic_oil" />
+                                            android:contentDescription="@string/life_icon_description"
+                                            app:srcCompat="@drawable/ic_life" />
                                     </FrameLayout>
 
                                     <TextView
-                                        android:id="@+id/textViewGasCost"
+                                        android:id="@+id/textViewLife"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:fontFamily="@font/yagi"
@@ -224,7 +255,7 @@
                                         android:paddingStart="10dp"
                                         android:textColor="@color/lightGrey"
                                         android:textSize="21sp"
-                                        tools:text="400" />
+                                        tools:text="100" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -241,12 +272,12 @@
                                             android:id="@+id/imageViewMineralCost"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:contentDescription="@string/mineral_icon_description"
-                                            app:srcCompat="@drawable/ic_mineral" />
+                                            android:contentDescription="@string/shield_icon_description"
+                                            app:srcCompat="@drawable/ic_shield" />
                                     </FrameLayout>
 
                                     <TextView
-                                        android:id="@+id/textViewMineralCost"
+                                        android:id="@+id/textViewShield"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:fontFamily="@font/yagi"
@@ -255,7 +286,7 @@
                                         android:paddingStart="10dp"
                                         android:textColor="@color/lightGrey"
                                         android:textSize="21sp"
-                                        tools:text="400" />
+                                        tools:text="30" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -269,20 +300,19 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textViewImprovements"
+                                android:id="@+id/textViewTextCapacity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
                                 android:fontFamily="@font/superstar_x"
                                 android:gravity="start"
-                                android:text="@string/improvement"
+                                android:text="Capacité"
                                 android:textColor="@color/lightGrey"
                                 android:textSize="18sp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginBottom="10dp"
+                                android:layout_height="match_parent"
                                 android:orientation="horizontal">
 
                                 <FrameLayout
@@ -291,58 +321,33 @@
                                     android:padding="5dp">
 
                                     <ImageView
-                                        android:id="@+id/imageViewEffect"
+                                        android:id="@+id/imageViewBuildingTime"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:contentDescription="@string/building_speed_icon_description"
-                                        app:srcCompat="@drawable/ic_speed_building" />
+                                        app:srcCompat="@drawable/ic_capacity" />
                                 </FrameLayout>
 
                                 <TextView
-                                    android:id="@+id/textViewEffectValueNow"
+                                    android:id="@+id/textViewCapacity"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:fontFamily="@font/yagi"
-                                    android:gravity="end|center_vertical|center"
+                                    android:gravity="center|start"
                                     android:paddingEnd="10dp"
                                     android:paddingStart="10dp"
                                     android:textColor="@color/lightGrey"
                                     android:textSize="21sp"
-                                    tools:text="0" />
+                                    tools:text="30" />
 
-                                <FrameLayout
-                                    android:layout_width="20dp"
-                                    android:layout_height="match_parent">
-
-                                    <ImageView
-                                        android:id="@+id/imageViewArrow"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:contentDescription="@string/left_arrow_description"
-                                        app:srcCompat="@drawable/ic_straight_right_arrow" />
-                                </FrameLayout>
-
-                                <TextView
-                                    android:id="@+id/textViewEffectValueAfterUpgrade"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/yagi"
-                                    android:gravity="start|center_vertical|center"
-                                    android:paddingEnd="10dp"
-                                    android:paddingStart="10dp"
-                                    android:textColor="@color/lightGrey"
-                                    android:textSize="21sp"
-                                    tools:text="0" />
                             </LinearLayout>
-
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/textViewConstruction"
@@ -375,11 +380,11 @@
 
                                 <TextView
                                     android:id="@+id/textViewBuildingTime"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:fontFamily="@font/yagi"
                                     android:gravity="center|start"
-                                    android:paddingEnd="0dp"
+                                    android:paddingEnd="10dp"
                                     android:paddingStart="10dp"
                                     android:textColor="@color/lightGrey"
                                     android:textSize="21sp"

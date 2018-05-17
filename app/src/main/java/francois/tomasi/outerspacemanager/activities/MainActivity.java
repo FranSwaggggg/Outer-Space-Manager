@@ -74,6 +74,16 @@ public class MainActivity extends AppCompatActivity {
             }
         );
 
+        btnFleet.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, FleetActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
         btnResearch.setOnClickListener(
             new View.OnClickListener() {
                 @Override

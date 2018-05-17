@@ -1,6 +1,7 @@
 package francois.tomasi.outerspacemanager.responses;
 
 public class GetShipResponse {
+    private int capacity;
     private int gasCost;
     private int life;
     private int maxAttack;
@@ -13,7 +14,8 @@ public class GetShipResponse {
     private int speed;
     private int timeToBuild;
 
-    public GetShipResponse(int gasCost, int life, int maxAttack, int minAttack, int mineralCost, String name, int shipId, int shield, int spatioportLevelNeeded, int speed, int timeToBuild) {
+    public GetShipResponse(int capacity, int gasCost, int life, int maxAttack, int minAttack, int mineralCost, String name, int shipId, int shield, int spatioportLevelNeeded, int speed, int timeToBuild) {
+        this.capacity = capacity;
         this.gasCost = gasCost;
         this.life = life;
         this.maxAttack = maxAttack;
@@ -26,6 +28,8 @@ public class GetShipResponse {
         this.speed = speed;
         this.timeToBuild = timeToBuild;
     }
+
+    public int getCapacity() { return capacity; }
 
     public int getGasCost() { return gasCost; }
 

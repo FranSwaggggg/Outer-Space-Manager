@@ -13,4 +13,5 @@ public class Constants {
 
     public static final String EXTRA_BUILDING_ID = "buildingId";
     public static final String EXTRA_SEARCH_ID = "searchId";
+    public static final String EXTRA_SHIP_ID = "shipId";
 }
