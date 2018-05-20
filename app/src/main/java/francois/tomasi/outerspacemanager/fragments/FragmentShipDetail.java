@@ -119,9 +119,9 @@ public class FragmentShipDetail extends Fragment {
         progressBarShipDetail.setVisibility(View.INVISIBLE);
         progressBarShipInfos.setVisibility(View.INVISIBLE);
 
-        /*int resID = getResources().getIdentifier("search_" + ship.getName().toLowerCase().replace(' ', '_') ,
+        int resID = getResources().getIdentifier("ship_" + ship.getShipId() ,
                 "drawable", getActivity().getPackageName());
-        imageViewShip.setImageResource(resID);*/
+        imageViewShip.setImageResource(resID);
 
         textViewShipName.setText(ship.getName());
 

@@ -59,9 +59,9 @@ public class ShipAdapter extends RecyclerView.Adapter<ShipAdapter.ViewHolder> {
         }
 
         void display(Ship ship) {
-            /*int resID = context.getResources().getIdentifier("search_" + ship.getName().toLowerCase().replace(' ', '_') ,
+            int resID = context.getResources().getIdentifier("ship_" + ship.getShipId() ,
                     "drawable", context.getPackageName());
-            imageViewShip.setImageResource(resID);*/
+            imageViewShip.setImageResource(resID);
             textViewShipName.setText(ship.getName());
         }
     }
