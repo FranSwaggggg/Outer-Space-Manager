@@ -61,7 +61,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
 
         void display(Search search) {
-            int resID = context.getResources().getIdentifier("search_" + search.getName().toLowerCase().replace(' ', '_') ,
+            int resID = context.getResources().getIdentifier("search_" + search.getSearchId() ,
                     "drawable", context.getPackageName());
             imageViewSearch.setImageResource(resID);
             textViewSearchName.setText(search.getName());

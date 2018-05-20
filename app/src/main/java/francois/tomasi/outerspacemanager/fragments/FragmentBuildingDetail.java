@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -137,7 +135,10 @@ public class FragmentBuildingDetail extends Fragment {
         progressBarBuildingDetail.setVisibility(View.INVISIBLE);
         progressBarBuildingInfos.setVisibility(View.VISIBLE);
 
-        Glide.with(getContext()).load(building.getImageUrl()).into(imageViewBuilding);
+        int resID = getResources().getIdentifier("building_" + building.getBuildingId() ,
+                "drawable", getActivity().getPackageName());
+        imageViewBuilding.setImageResource(resID);
+
         textViewBuildingName.setText(building.getName());
         textViewBuildingLevel.setText(String.valueOf("Niveau " + building.getLevel()));
 
@@ -149,7 +150,7 @@ public class FragmentBuildingDetail extends Fragment {
         textViewMineralCost.setText(format(locale, "%,d", mineralCost));
         textViewGasCost.setText(format(locale, "%,d", gasCost));
 
-        int resID = getResources().getIdentifier("ic_" + building.getEffect() ,
+        resID = getResources().getIdentifier("ic_" + building.getEffect() ,
                 "drawable", getActivity().getPackageName());
         imageViewEffect.setImageResource(resID);
 

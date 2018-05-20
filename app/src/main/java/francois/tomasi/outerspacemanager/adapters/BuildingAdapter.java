@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import francois.tomasi.outerspacemanager.R;
@@ -63,7 +61,9 @@ public class BuildingAdapter extends RecyclerView.Adapter<BuildingAdapter.ViewHo
         }
 
         void display(Building building) {
-            Glide.with(context).load(building.getImageUrl()).into(imageViewBuilding);
+            int resID = context.getResources().getIdentifier("building_" + building.getBuildingId() ,
+                    "drawable", context.getPackageName());
+            imageViewBuilding.setImageResource(resID);
             textViewBuildingName.setText(building.getName());
             textViewBuildingLevel.setText(String.valueOf("Niveau " + building.getLevel()));
         }

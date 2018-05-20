@@ -135,7 +135,7 @@ public class FragmentSearchDetail extends Fragment {
         progressBarSearchDetail.setVisibility(View.INVISIBLE);
         progressBarSearchInfos.setVisibility(View.VISIBLE);
 
-        int resID = getResources().getIdentifier("search_" + search.getName().toLowerCase().replace(' ', '_') ,
+        int resID = getResources().getIdentifier("search_" + search.getSearchId() ,
                 "drawable", getActivity().getPackageName());
         imageViewSearch.setImageResource(resID);
 
